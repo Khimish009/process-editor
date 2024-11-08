@@ -1,0 +1,17 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    margin-bottom: 10px;
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
