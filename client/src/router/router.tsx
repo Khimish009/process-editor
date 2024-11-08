@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom"
-import { Root } from "./root"
 import { ProcessPage } from "../pages/process"
 import { ProcessListPage } from "../pages/process-list"
+import { App } from "../app"
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <Root />,
+        element: <App />,
         children: [
             {
                 index: true,
