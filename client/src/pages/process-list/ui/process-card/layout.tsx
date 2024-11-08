@@ -1,15 +1,15 @@
 import styles from "./styles.module.css"
 
 export const Layout = ({
-    title,
+    name,
     onDelete
 }: {
-    title: string,
+    name: string,
     onDelete?: () => void
 }) => {
     return (
         <div className={styles.root}>
-            <div className={styles.title}>{ title }</div>
+            <div className={styles.name}>{ name }</div>
             <button className={styles.deleteBtn} onClick={onDelete}>delete</button>
         </div>
     )
