@@ -10,11 +10,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <ProcessPage />
+                element: <ProcessListPage />
             },
             {
                 path: "process/:id",
-                element: <ProcessListPage />
+                element: <ProcessPage />
             }
         ]
     }

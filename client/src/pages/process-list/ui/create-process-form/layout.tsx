@@ -7,7 +7,6 @@ export const Layout = ({ onSubmit }: { onSubmit: (name: string) => void }) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const name = formData.get("name") as string
-        console.log(e, formData, name)
         onSubmit(name)
     }
 

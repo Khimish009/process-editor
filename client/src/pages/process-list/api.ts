@@ -18,7 +18,7 @@ export const processApi = {
     },
 
     async delete(id: string) {
-        return fetch(`/api.processes/${id}`, {
+        return fetch(`/api/processes/${id}`, {
             method: "DELETE"
         })
     }
