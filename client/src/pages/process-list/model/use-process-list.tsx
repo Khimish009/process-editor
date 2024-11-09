@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type ProcessListItem = {
     id: string;
@@ -7,6 +7,10 @@ export type ProcessListItem = {
 
 export const useProcessList = () => {
     const [processList, setProcessList] = useState<ProcessListItem[]>([])
+
+    useEffect(() => {
+        
+    }, [])
 
     const create = (name: string) => {
         setProcessList((list) => [...list, { id: String(new Date()), name }])
