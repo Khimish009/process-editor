@@ -1,16 +1,25 @@
+import { useProcessFilters } from "./model/use-process-filters"
 import { useProcessList } from "./model/use-process-list"
 import { CreateProcessForm } from "./ui/create-process-form"
+import { ProcessFilters } from "./ui/filters"
 import { ProcessCard } from "./ui/process-card"
 import { Root } from "./ui/root"
 
 export const Page = () => {
     const { isLoading, list, create } = useProcessList()
+    const { filteredProcesses, searchTerm, setSearchTerm } = useProcessFilters(list)
     
     return (
         <Root
             createForm={<CreateProcessForm onSubmit={create} />}
+            filters={
+                <ProcessFilters
+                    value={searchTerm}
+                    onChangeValue={setSearchTerm}
+                />
+            }
             isLoading={isLoading}
-            cards={list.map(({ name, id, onDelete }) => (
+            cards={filteredProcesses.map(({ name, id, onDelete }) => (
                 <ProcessCard
                     key={id}
                     id={id}
