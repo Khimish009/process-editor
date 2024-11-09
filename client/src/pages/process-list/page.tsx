@@ -13,6 +13,7 @@ export const Page = () => {
             cards={list.map(({ name, id, onDelete }) => (
                 <ProcessCard
                     key={id}
+                    id={id}
                     name={name}
                     onDelete={onDelete}
                 />
