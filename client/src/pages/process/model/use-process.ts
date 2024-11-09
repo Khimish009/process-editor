@@ -4,7 +4,7 @@ import { procesApi } from "../api"
 
 export const useProcess = (id: string) => {
     const [process, setProcess] = useState<Process>()
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const fetchProcess = () => {
         setIsLoading(true)

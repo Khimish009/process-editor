@@ -8,7 +8,7 @@ export type ProcessListItem = {
 
 export const useProcessList = () => {
     const [processList, setProcessList] = useState<ProcessListItem[]>([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const fetchList = () => {
         setIsLoading(true)

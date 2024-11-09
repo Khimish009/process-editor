@@ -21,7 +21,7 @@ export const Layout = ({
 
             <div className={styles.list}>
                 {card}
-                {isLoading && <div className={styles.loading}>Loading...</div>}
+                {isLoading && <div className={styles.loading}>loading...</div>}
             </div>
         </div>
     )
