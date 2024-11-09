@@ -4,11 +4,12 @@ import { ProcessCard } from "./ui/process-card"
 import { Root } from "./ui/root"
 
 export const Page = () => {
-    const { list, create } = useProcessList()
+    const { isLoading, list, create } = useProcessList()
     
     return (
         <Root
             createForm={<CreateProcessForm onSubmit={create} />}
+            isLoading={isLoading}
             cards={list.map(({ name, id, onDelete }) => (
                 <ProcessCard
                     key={id}

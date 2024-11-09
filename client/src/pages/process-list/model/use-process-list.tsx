@@ -8,9 +8,14 @@ export type ProcessListItem = {
 
 export const useProcessList = () => {
     const [processList, setProcessList] = useState<ProcessListItem[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchList = () => {
-        processApi.list().then(setProcessList)
+        setIsLoading(true)
+
+        processApi.list()
+            .then(setProcessList)
+            .finally(() => setIsLoading(false))
     }
 
     useEffect(() => {
@@ -35,6 +40,7 @@ export const useProcessList = () => {
     }))
 
     return {
+        isLoading,
         list,
         create,
     }
