@@ -1,25 +1,29 @@
 import { ProcessListItem } from "./model/use-process-list"
 
-export const processApi = {
-    async list() {
-        return await fetch('/api/processes').then((res) => {
-            return res.json() as Promise<ProcessListItem[]>
-        })
-    },
+async function list() {
+    return await fetch('/api/processes').then((res) => {
+        return res.json() as Promise<ProcessListItem[]>
+    })
+}
 
-    async create(name: string) {
-        return await fetch('/api/processes', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({name})
-        })
-    },
+async function create(name: string) {
+    return await fetch('/api/processes', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name})
+    })
+}
 
-    async delete(id: string) {
-        return fetch(`/api/processes/${id}`, {
-            method: "DELETE"
-        })
-    }
+async function deleteProcess(id: string) {
+    return fetch(`/api/processes/${id}`, {
+        method: "DELETE"
+    })
+}
+
+export const api = {
+    list,
+    create,
+    deleteProcess
 }
