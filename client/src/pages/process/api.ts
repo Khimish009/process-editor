@@ -41,7 +41,7 @@ async function addRelation(data: RelationParams) {
     })
 }
 
-export const api = {
+export const procesApi = {
     getById,
     createBlock,
     addRelation

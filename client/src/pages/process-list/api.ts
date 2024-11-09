@@ -22,7 +22,7 @@ async function deleteProcess(id: string) {
     })
 }
 
-export const api = {
+export const processApi = {
     list,
     create,
     deleteProcess
