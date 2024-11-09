@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type ProcessListItem = {
+export type ProcessListItem = {
     id: string;
     name: string;
 }
