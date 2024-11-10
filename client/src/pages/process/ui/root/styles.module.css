@@ -3,6 +3,7 @@
     flex-direction: column;
     position: relative;
     background-color: lightgray;
+    flex: 1;
 }
 
 .title {
