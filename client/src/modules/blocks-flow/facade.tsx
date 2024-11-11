@@ -4,7 +4,7 @@ import { BlockView } from "./ui/block"
 import { Field } from "./ui/field"
 import { Root } from "./ui/root"
 
-export const BloksFlow = ({ blocks }: { blocks: Block[] }) => {
+export const Facade = ({ blocks }: { blocks: Block[] }) => {
     return (
         <Root 
             field={<Field />}
