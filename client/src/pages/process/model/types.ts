@@ -10,12 +10,9 @@ export type Block = {
     type: string
     data: string
 
-    x: number
-    y: number
-
     inputs: Dependency[]
     outputs: Dependency[]
-}
+} & BlockPosition
 
 type Dependency = {
     id: string
@@ -23,4 +20,9 @@ type Dependency = {
     outputPort: string
     inputId: string
     inputPort: string
+}
+
+export type BlockPosition = {
+    x: number
+    y: number
 }

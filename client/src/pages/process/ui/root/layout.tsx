@@ -4,14 +4,14 @@ import styles from "./styles.module.css"
 export const Layout = ({
     process,
     flow,
-    manageBlock,
+    modals,
     isLoading
 }: {
     process?: {
         name: string
     },
     flow: React.ReactNode
-    manageBlock: React.ReactNode
+    modals: React.ReactNode
     isLoading: boolean
 }) => {
     return (
@@ -19,7 +19,7 @@ export const Layout = ({
             {process && <h1 className={styles.title}>Process: {process.name}</h1>}
             {isLoading && <div className={styles.loading}>loading...</div>}
             {flow}
-            {manageBlock}
+            {modals}
         </div>
     )
 }

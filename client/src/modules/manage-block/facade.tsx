@@ -1,6 +1,10 @@
 import { Root } from "./ui/root"
 
-export const Facade = () => {
+export const Facade = ({ isOpen }: { isOpen?: boolean }) => {
+    if (!isOpen) {
+        return null
+    }
+    
     return (
         <Root />
     )

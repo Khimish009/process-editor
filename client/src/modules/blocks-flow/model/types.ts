@@ -11,10 +11,15 @@ export type Block = {
     outputs: Dependency[]
 }
 
-type Dependency = {
+export type Dependency = {
     id: string
     outputId: string
     outputPort: string
     inputId: string
     inputPort: string
+}
+
+export type FlowPosition = {
+    x: number
+    y: number
 }

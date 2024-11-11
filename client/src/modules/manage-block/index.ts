@@ -1,1 +1,1 @@
-export { Facade as ManageBlock } from "./facade"
+export { Facade as CreateBlockModal } from "./facade"
