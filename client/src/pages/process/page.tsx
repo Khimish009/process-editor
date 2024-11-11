@@ -15,7 +15,7 @@ export const Page = () => {
             process={process}
             flow={process && <BloksFlow blocks={process.blocks} onFlowClick={createBlock.startCreate} />}
             isLoading={isLoading}
-            modals={<CreateBlockModal isOpen={createBlock.isCreating} />}
+            modals={<CreateBlockModal isOpen={createBlock.isCreating} onClose={createBlock.stopCreate} />}
         />
     )
 }

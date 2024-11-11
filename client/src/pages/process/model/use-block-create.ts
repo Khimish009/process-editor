@@ -6,10 +6,13 @@ export const useBlockCreate = () => {
 
     const startCreate = (position: BlockPosition) => setPositionToCreate(position)
 
+    const stopCreate = () => setPositionToCreate(undefined)
+
     const isCreating = !!positionToCreate
 
     return {
         isCreating,
-        startCreate
+        startCreate,
+        stopCreate
     }
 }
