@@ -1,4 +1,4 @@
-import { Root } from "./ui/root"
+import { Root } from "./ui/modal"
 
 export const Facade = ({ isOpen }: { isOpen?: boolean }) => {
     if (!isOpen) {
