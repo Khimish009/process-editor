@@ -1,4 +1,7 @@
+import { useId } from "react"
+import { CreateForm } from "./ui/create-form"
 import { Modal } from "./ui/modal"
+import { SubmitButton } from "./ui/submit-button"
 
 export const Facade = ({ 
     isOpen,
@@ -7,6 +10,8 @@ export const Facade = ({
     isOpen?: boolean,
     onClose: () => void
 }) => {
+    const formId = useId()
+
     if (!isOpen) {
         return null
     }
@@ -14,8 +19,8 @@ export const Facade = ({
     return (
         <Modal 
             title="Create block"
-            body={<div>body</div>}
-            footer={null}
+            body={<CreateForm formId={formId} onSubmit={console.log} />}
+            footer={<SubmitButton formId={formId} />}
             onClose={onClose}
         />
     )
