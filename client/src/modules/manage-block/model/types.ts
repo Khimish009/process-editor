@@ -12,9 +12,3 @@ export const BlockTypes = {
 }
 
 export type BlockType = (typeof BlockTypes)[keyof typeof BlockTypes]
-
-export type FormData = {
-    name: string
-    type: BlockType
-    data: string
-} 

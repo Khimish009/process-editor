@@ -20,7 +20,11 @@ export const Facade = ({
         <Modal 
             title="Create block"
             body={<CreateForm formId={formId} onSubmit={console.log} />}
-            footer={<SubmitButton formId={formId} />}
+            footer={
+                <>
+                    <SubmitButton formId={formId} />
+                </>
+            }
             onClose={onClose}
         />
     )

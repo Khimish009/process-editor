@@ -1,7 +1,7 @@
-import React, { useState } from "react"
 import styles from "./styles.module.css"
-import { BlockTypes, type FormData } from "../../model/types"
+import { BlockTypes } from "../../model/types"
 import { WebhookFields } from "../webhook-fields"
+import { useFormCreate, type FormData } from "../../view-model/use-create-form"
 
 export const Layout = ({
     formId,
@@ -10,20 +10,13 @@ export const Layout = ({
     formId: string
     onSubmit: (formData: FormData) => void 
 }) => {
-    const [formData, setFormData] = useState<FormData>({
-        name: "",
-        type: BlockTypes.Start,
-        data: "{}"
-    })
-
-    const handleTypeChange = (type: string) => {
-        setFormData((formData) => ({...formData, type, name: type, data: "{}"}))
-    }
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        onSubmit(formData)
-    }
+    const { 
+        formData,
+        handleTypeChange,
+        handleNameChange,
+        handleSubmit,
+        hanldleDataChange,
+    } = useFormCreate(onSubmit)
 
     return (
         <form className={styles.root} onSubmit={handleSubmit} id={formId}>
@@ -32,7 +25,7 @@ export const Layout = ({
                 name="type"
                 required
                 value={formData.type}
-                onChange={(e) => handleTypeChange(e.target.value)}
+                onChange={handleTypeChange}
             >
                 {Object.values(BlockTypes).map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -45,12 +38,12 @@ export const Layout = ({
                 placeholder=""
                 required
                 value={formData.name}
-                onChange={(e) => setFormData((formData) => ({...formData, name: e.target.value}))}
+                onChange={handleNameChange}
             />
             {formData.type === BlockTypes.Webhook  && (
                 <WebhookFields 
                     data={formData.data}
-                    onChangeData={(data) => setFormData({ ...formData, data })}
+                    onChangeData={hanldleDataChange}
                 />
             )}
         </form>
