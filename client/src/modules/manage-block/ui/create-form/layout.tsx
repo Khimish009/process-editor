@@ -1,50 +1,36 @@
 import styles from "./styles.module.css"
-import { BlockTypes } from "../../model/types"
 import { WebhookFields } from "../fields/webhook-fields"
 import { useFormCreate, type FormData } from "../../view-model/use-create-form"
+import { DefaultFields } from "../fields/default-fields"
 
 export const Layout = ({
     formId,
-    onSubmit 
+    onSubmit  
 }: {
     formId: string
     onSubmit: (formData: FormData) => void 
 }) => {
     const { 
         formData,
+        webhookFormData,
         handleTypeChange,
         handleNameChange,
         handleSubmit,
-        hanldleDataChange,
+        handleChangeWebhookFormData
     } = useFormCreate(onSubmit)
 
     return (
         <form className={styles.root} onSubmit={handleSubmit} id={formId}>
-            <select 
-                className={styles.input}
-                name="type"
-                required
-                value={formData.type}
-                onChange={handleTypeChange}
-            >
-                {Object.values(BlockTypes).map(type => (
-                    <option key={type} value={type}>{type}</option>
-                ))}
-            </select>
-            <input 
-                className={styles.input}
-                name="name"
-                type="text"
-                placeholder=""
-                required
-                value={formData.name}
-                onChange={handleNameChange}
+            <DefaultFields 
+                formData={formData}
+                onNameChange={handleNameChange}
+                onTypeChange={handleTypeChange}
             />
-            {formData.type === BlockTypes.Webhook  && (
+            {webhookFormData && (
                 <WebhookFields 
-                    data={formData.data}
-                    onChangeData={hanldleDataChange}
-                />
+                    formData={webhookFormData}
+                    onChangeFormData={handleChangeWebhookFormData}
+                />  
             )}
         </form>
     )

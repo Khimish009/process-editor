@@ -5,7 +5,12 @@ export type FormData = {
     name: string
     type: BlockType
     data: string
-} 
+}
+
+export type WebhookFormData = {
+    url: string
+    method: string
+}
 
 export const useFormCreate = (onSubmit: (formData: FormData) => void) => {
     const [formData, setFormData] = useState<FormData>({
@@ -13,6 +18,10 @@ export const useFormCreate = (onSubmit: (formData: FormData) => void) => {
         type: BlockTypes.Start,
         data: "{}"
     })
+
+    const webhookFormData: WebhookFormData = formData.type === BlockTypes.Webhook 
+        ? JSON.parse(formData.data)
+        : undefined
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const type = e.target.value
@@ -23,21 +32,21 @@ export const useFormCreate = (onSubmit: (formData: FormData) => void) => {
         setFormData((formData) => ({...formData, name: e.target.value}))
     }
 
-    const hanldleDataChange = (data: string) => {
-        setFormData((formData) => ({ ...formData, data }))
-    }
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         onSubmit(formData)
     }
 
+    const handleChangeWebhookFormData = (data: WebhookFormData) => {
+        setFormData((formData) => ({ ...formData, data: JSON.stringify(data)}))
+    }
 
     return {
         formData,
+        webhookFormData,
         handleTypeChange,
         handleNameChange,
-        hanldleDataChange,
-        handleSubmit
+        handleSubmit,
+        handleChangeWebhookFormData
     }
 }

@@ -4,12 +4,12 @@ import styles from "./styles.module.css"
 
 export const Layout = ({
     formData,
-    handleNameChange,
-    handleTypeChange,
+    onNameChange, 
+    onTypeChange,
 }: {
     formData: FormData,
-    handleTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-    handleNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }) => {
 
     return (
@@ -19,7 +19,7 @@ export const Layout = ({
                 name="type"
                 required
                 value={formData.type}
-                onChange={handleTypeChange}
+                onChange={onTypeChange}
             >
                 {Object.values(BlockTypes).map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -32,7 +32,7 @@ export const Layout = ({
                 placeholder=""
                 required
                 value={formData.name}
-                onChange={handleNameChange}
+                onChange={onNameChange}
             />
         </>
     )

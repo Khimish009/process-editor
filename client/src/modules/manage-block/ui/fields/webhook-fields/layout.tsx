@@ -1,17 +1,13 @@
+import { WebhookFormData } from "../../../view-model/use-create-form"
 import styles from "./styles.module.css"
 
 export const Layout = ({
-    data,
-    onChangeData
+    formData,
+    onChangeFormData
 }: {
-    data: string,
-    onChangeData: (data: string) => void
+    formData: WebhookFormData,
+    onChangeFormData: (formData: WebhookFormData) => void
 }) => {
-    const formData = JSON.parse(data)
-    const setFormData = (key: string, value: string) => {
-        onChangeData(JSON.stringify({...formData, [key]: value}))
-    }
-
     return (
         <>
             <input 
@@ -19,13 +15,13 @@ export const Layout = ({
                 name="url"
                 type="text"
                 value={formData.url}
-                onChange={(e) => setFormData("url", e.target.value)}
+                onChange={(e) => onChangeFormData({ ...formData, url: e.target.value })}
             />
             <select 
                 className={styles.input}
                 name="method"
                 value={formData.method}
-                onChange={(e) => setFormData("method", e.target.value)}
+                onChange={(e) => onChangeFormData({ ...formData, method: e.target.value })}
             >
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
