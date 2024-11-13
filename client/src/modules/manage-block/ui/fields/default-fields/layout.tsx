@@ -1,25 +1,19 @@
+import { BlockTypes } from "../../../model/types"
+import { FormData } from "../../../view-model/use-create-form"
 import styles from "./styles.module.css"
-import { BlockTypes } from "../../model/types"
-import { WebhookFields } from "../fields/webhook-fields"
-import { useFormCreate, type FormData } from "../../view-model/use-create-form"
 
 export const Layout = ({
-    formId,
-    onSubmit 
+    formData,
+    handleNameChange,
+    handleTypeChange,
 }: {
-    formId: string
-    onSubmit: (formData: FormData) => void 
+    formData: FormData,
+    handleTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    handleNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }) => {
-    const { 
-        formData,
-        handleTypeChange,
-        handleNameChange,
-        handleSubmit,
-        hanldleDataChange,
-    } = useFormCreate(onSubmit)
 
     return (
-        <form className={styles.root} onSubmit={handleSubmit} id={formId}>
+        <>
             <select 
                 className={styles.input}
                 name="type"
@@ -40,12 +34,6 @@ export const Layout = ({
                 value={formData.name}
                 onChange={handleNameChange}
             />
-            {formData.type === BlockTypes.Webhook  && (
-                <WebhookFields 
-                    data={formData.data}
-                    onChangeData={hanldleDataChange}
-                />
-            )}
-        </form>
+        </>
     )
 }
