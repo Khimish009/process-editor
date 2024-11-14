@@ -7,17 +7,18 @@ export const useProcess = (id: string) => {
     const [isLoading, setIsLoading] = useState(true)
 
     const fetchProcess = () => {
-        setIsLoading(true)
-
-        procesApi.getById(id)
-            .then(setProcess)
-            .finally(() => setIsLoading(false))
+        return procesApi.getById(id).then(setProcess)
     }
 
-    useEffect(() => fetchProcess(), [])
+    useEffect(() => {
+        setIsLoading(true)
+
+        fetchProcess().finally(() => setIsLoading(false))
+    }, [])
 
     return {
         process,
-        isLoading
+        isLoading,
+        refetch: fetchProcess
     }
 }

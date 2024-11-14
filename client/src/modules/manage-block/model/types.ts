@@ -1,9 +1,7 @@
-export type Block = {
-    id: string
-    name: string
-    type: string
-    data: string
-}
+export type blockPosition = {
+    x: number
+    y: number
+} 
 
 export const BlockTypes = {
     Webhook: "webhook",

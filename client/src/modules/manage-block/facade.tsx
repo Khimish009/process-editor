@@ -2,24 +2,35 @@ import { useId } from "react"
 import { CreateForm } from "./ui/create-form"
 import { Modal } from "./ui/modal"
 import { SubmitButton } from "./ui/submit-button"
+import type { BlockPosition } from "../../pages/process/model/types"
+import { useCreateBlock } from "./model/useCreateBlock"
 
 export const Facade = ({ 
-    isOpen,
-    onClose
+    createPosition,
+    processId,
+    onClose,
+    onSuccess
 }: { 
-    isOpen?: boolean,
+    createPosition?: BlockPosition,
+    processId: string
     onClose: () => void
+    onSuccess: () => void
 }) => {
     const formId = useId()
+    const createBlock = useCreateBlock({
+        processId,
+        blockPosition: createPosition,
+        onSuccess
+    })
 
-    if (!isOpen) {
+    if (!createPosition) {
         return null
     }
     
     return (
         <Modal 
             title="Create block"
-            body={<CreateForm formId={formId} onSubmit={console.log} />}
+            body={<CreateForm formId={formId} onSubmit={createBlock.startCreate} />}
             footer={
                 <>
                     <SubmitButton formId={formId} />
