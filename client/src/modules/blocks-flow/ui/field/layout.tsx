@@ -14,7 +14,7 @@ export const Layout = ({
         })
     }
     return (
-        <div className={styles.root} onClick={handleClick}>
+        <div className={styles.field} onClick={handleClick}>
         </div>
     )
 }

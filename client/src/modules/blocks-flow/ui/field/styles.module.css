@@ -1,5 +1,6 @@
-.root {
+.field {
     display: flex;
-    position: relative;
     flex: 1;
+    position: absolute;
+    inset: 0;
 }

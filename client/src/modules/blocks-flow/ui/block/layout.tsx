@@ -7,7 +7,7 @@ export const Layout = ({
     block: Block
 }) => {
     return (
-        <div className={styles.root} style={{ left: block.x, top: block.y }}>
+        <div className={styles.block} style={{ left: block.x, top: block.y }}>
             {block.name}
         </div>
     )
