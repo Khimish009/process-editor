@@ -1,3 +1,15 @@
+export type PortConfig = {
+    port: string
+    label: string
+}
+
+export type BlockTypes = {
+    type: string
+    label: string
+    outputs: PortConfig
+    inputs: PortConfig
+}
+
 export type Block = {
     id: string
     name: string

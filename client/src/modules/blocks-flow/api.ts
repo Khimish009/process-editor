@@ -1,3 +1,9 @@
+import { BlockTypes } from "./model/types"
+
+async function getBlocksTypes() {
+    return await fetch("/api/block/types").then(res => res.json() as Promise<BlockTypes[]>)
+}
+
 type RelationParams = {
     outputId: string
     outputPort: string
@@ -22,6 +28,7 @@ async function deleteRelation(relationId: string) {
 }
 
 export const BlocksFlowApi = {
+    getBlocksTypes,
     addRelation,
     deleteRelation
 }
