@@ -27,10 +27,10 @@ export type Block = {
 
 export type Dependency = {
     id: string
-    outputId: string
-    outputPort: string
     inputId: string
     inputPort: string
+    outputId: string
+    outputPort: string
 }
 
 export type FlowPosition = {
