@@ -10,6 +10,8 @@ export type BlockTypes = {
     inputs: PortConfig
 }
 
+export type BlockTypesRecord = Record<string, BlockTypes | undefined>
+
 export type Block = {
     id: string
     name: string
