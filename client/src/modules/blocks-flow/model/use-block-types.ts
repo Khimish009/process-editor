@@ -4,7 +4,7 @@ import type { BlockTypes, BlockTypesRecord } from "./types"
 
 export const useBlockTypes = () => {
     const [isLoading, setIsLoading] = useState(false)
-    const [blockTypes, setBlockTypes] = useState<BlockTypes[]>()
+    const [blockTypes, setBlockTypes] = useState<BlockTypes[]>([])
 
     const fetchBlockTypes = () => {
         return BlocksFlowApi.getBlocksTypes().then(setBlockTypes)
@@ -16,12 +16,11 @@ export const useBlockTypes = () => {
         fetchBlockTypes().finally(() => setIsLoading(false))
     }, [])
 
-    const blockTypesRecord = blockTypes?.reduce((acc, blockType) => {
+    const blockTypesRecord = blockTypes.reduce((acc, blockType) => {
         acc[blockType.type] = blockType
 
         return acc
     }, {} as BlockTypesRecord)
-
 
     return {
         isLoading,

@@ -1,7 +1,7 @@
 import { BlockTypes } from "./model/types"
 
 async function getBlocksTypes() {
-    return await fetch("/api/block/types").then(res => res.json() as Promise<BlockTypes[]>)
+    return await fetch("/api/blocks/types").then(res => res.json() as Promise<BlockTypes[]>)
 }
 
 type RelationParams = {
@@ -12,7 +12,7 @@ type RelationParams = {
 }
 
 async function addRelation(data: RelationParams) {
-    return fetch('/api/block/relation', {
+    return fetch('/api/blocks/relation', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -22,7 +22,7 @@ async function addRelation(data: RelationParams) {
 }
 
 async function deleteRelation(relationId: string) {
-    return fetch(`/api/block/relation/${relationId}`, {
+    return fetch(`/api/blocks/relation/${relationId}`, {
         method: "DELETE"
     })
 }

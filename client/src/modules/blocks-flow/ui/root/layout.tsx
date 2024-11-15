@@ -13,8 +13,8 @@ export const Layout = ({
     return (
         <div className={styles.root}>
             {field}
-            {blocks}
             {arrows}
+            {blocks}
         </div>
     )
 }

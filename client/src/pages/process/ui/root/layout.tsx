@@ -16,10 +16,10 @@ export const Layout = ({
 }) => {
     return (
         <div className={styles.root}>
-            {process && <h1 className={styles.title}>Process: {process.name}</h1>}
             {isLoading && <div className={styles.loading}>loading...</div>}
             {flow}
             {modals}
+            {process && <h1 className={styles.title}>Process: {process.name}</h1>}
         </div>
     )
 }
