@@ -6,18 +6,24 @@ import { CreateBlockModal, useStartCreate } from "../../modules/manage-block"
 
 export const Page = () => {
     const processId = useProcessId()
-    const { process, isLoading, refetch } = useProcess(processId)
+    const process = useProcess(processId)
     const startCreate = useStartCreate()
 
     return (
         <Root 
-            process={process}
-            flow={process && <BloksFlow blocks={process.blocks} onFlowClick={startCreate} />}
-            isLoading={isLoading}
+            process={process.data}
+            flow={process.data && 
+                <BloksFlow 
+                    blocks={process.data.blocks}
+                    onFlowClick={startCreate}
+                    onChanged={process.refetch} 
+                />
+            }
+            isLoading={process.isLoading}
             modals={
                 <CreateBlockModal
                     processId={processId}
-                    onSuccess={refetch}
+                    onSuccess={process.refetch}
                 />
             }
         />

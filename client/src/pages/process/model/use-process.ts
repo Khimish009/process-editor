@@ -17,7 +17,7 @@ export const useProcess = (id: string) => {
     }, [])
 
     return {
-        process,
+        data: process,
         isLoading,
         refetch: fetchProcess
     }
