@@ -4,6 +4,14 @@
     gap: 5px;
 }
 
+.port.selected .target {
+    background-color: green;
+}
+
+.port.otherSelected .target {
+    background-color: blue;
+}
+
 .port .input {
     flex-direction: row-reverse;
 }

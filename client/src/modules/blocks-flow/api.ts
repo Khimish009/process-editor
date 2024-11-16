@@ -1,4 +1,4 @@
-import { BlockTypes } from "./model/types"
+import { BlockTypes } from "./model/types/block-types"
 
 async function getBlocksTypes() {
     return await fetch("/api/blocks/types").then(res => res.json() as Promise<BlockTypes[]>)
@@ -17,7 +17,7 @@ async function addRelation(data: RelationParams) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ data })
+        body: JSON.stringify(data)
     })
 }
 

@@ -1,11 +1,6 @@
 import { useState } from "react"
 import { BlocksFlowApi } from "../api"
-
-type PortInfo = {
-    blockId: string
-    type: "input" | "output"
-    port: string
-}
+import { PortInfo } from "./types/port"
 
 export const useCreateRelation = () => {
     const [selectedPort, setSelectedPort] = useState<PortInfo>()
@@ -18,6 +13,10 @@ export const useCreateRelation = () => {
             port.type === selectedPort?.type &&
             port.port === selectedPort?.port
         )
+    }
+
+    const getIsCanSelectedPort = (port: PortInfo) => {
+        return isSelecting && !getIsSelectedPort(port) && port.type !== selectedPort.type
     }
 
     const selectPort = (currentPort: PortInfo) => {
@@ -63,7 +62,8 @@ export const useCreateRelation = () => {
 
     return {
         isSelecting,
-        getIsSelectedPort,
+        getIsSelected: getIsSelectedPort,
+        getIsCanSelected: getIsCanSelectedPort,
         selectPort,
         unselectPort
     }

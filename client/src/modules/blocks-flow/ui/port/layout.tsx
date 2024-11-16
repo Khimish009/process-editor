@@ -3,15 +3,27 @@ import clsx from "clsx"
 
 export const Layout = ({
     text,
-    type
-}: {
+    type,
+    isSelected,
+    isOtherSelected,
+    onTargetClick
+}: { 
     text: string
     type: "input" | "output"
+    isSelected: boolean
+    isOtherSelected: boolean
+    onTargetClick: () => void
 }) => {
     return (
-        <div className={clsx(styles.port, styles[type])}>
+        <div className={clsx(styles.port, styles[type], {
+            [styles.selected]: isSelected,
+            [styles.otherSelected]: isOtherSelected,
+        })}>
             <div className={styles.label}>{text}</div>
-            <div className={styles.target}></div>
+            <button 
+                onClick={onTargetClick} 
+                className={styles.target}
+            />
         </div>
     )
 }

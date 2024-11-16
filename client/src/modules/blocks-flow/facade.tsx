@@ -1,5 +1,8 @@
-import { Block, FlowPosition } from "./model/types"
+import type { Block } from "./model/types/block"
+import type { FlowPosition } from "./model/types/flow"
+import { PortInfo } from "./model/types/port"
 import { useBlockTypes } from "./model/use-block-types"
+import { useCreateRelation } from "./model/use-create-relation"
 import { Arrows } from "./ui/arrows"
 import { BlockView } from "./ui/block"
 import { Field } from "./ui/field"
@@ -14,6 +17,7 @@ export const Facade = ({
     onFlowClick: (position: FlowPosition) => void
 }) => {
     const blockTypes = useBlockTypes()
+    const createRelation = useCreateRelation()
 
     return (
         <Root 
@@ -23,7 +27,24 @@ export const Facade = ({
                     key={block.id} 
                     block={block}
                     blockTypesRecord={blockTypes.data}
-                    renderPort={(type, config) => <Port key={config.port} type={type} text={config.label} />}
+                    renderPort={(type, config) => {
+                        const portInfo: PortInfo = {
+                            blockId: block.id,
+                            type,
+                            port: config.port
+                        }
+ 
+                        return (
+                            <Port
+                                key={config.port}
+                                type={type} 
+                                text={config.label}
+                                isSelected={createRelation.getIsSelected(portInfo)}
+                                isOtherSelected={createRelation.getIsCanSelected(portInfo)}
+                                onTargetClick={() => createRelation.selectPort(portInfo)}
+                            />
+                        )
+                    }}
                 />
             ))}
             arrows={<Arrows />}
