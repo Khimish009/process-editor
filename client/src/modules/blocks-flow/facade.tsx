@@ -11,13 +11,15 @@ import { Root } from "./ui/root"
 
 export const Facade = ({
     blocks,
-    onFlowClick,
+    onFlowClick, 
+    onChanged
 }: {
     blocks: Block[],
     onFlowClick: (position: FlowPosition) => void
+    onChanged?: () => void
 }) => {
     const blockTypes = useBlockTypes()
-    const createRelation = useCreateRelation()
+    const createRelation = useCreateRelation(blocks, onChanged)
 
     return (
         <Root 
@@ -40,7 +42,7 @@ export const Facade = ({
                                 type={type} 
                                 text={config.label}
                                 isSelected={createRelation.getIsSelected(portInfo)}
-                                isOtherSelected={createRelation.getIsCanSelected(portInfo)}
+                                isCanSelected={createRelation.getIsCanSelectedEnd(portInfo)}
                                 onTargetClick={() => createRelation.selectPort(portInfo)}
                             />
                         )

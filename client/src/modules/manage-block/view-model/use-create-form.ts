@@ -14,7 +14,7 @@ export type WebhookFormData = {
 
 export const useFormCreate = (onSubmit: (formData: FormData) => void) => {
     const [formData, setFormData] = useState<FormData>({
-        name: "",
+        name: "Start",
         type: BlockTypes.Start,
         data: "{}"
     })
