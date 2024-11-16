@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { BlocksFlowApi } from "../api"
-import { PortInfo } from "./types/port"
+import type { PortInfo } from "./types/port" 
+import type { Block } from "./types/block"
 
-export const useCreateRelation = () => {
+export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => void) => {
     const [selectedPort, setSelectedPort] = useState<PortInfo>()
 
     const isSelecting = !!selectedPort
@@ -16,16 +17,38 @@ export const useCreateRelation = () => {
     }
 
     const getIsCanSelectedPort = (port: PortInfo) => {
-        return isSelecting && !getIsSelectedPort(port) && port.type !== selectedPort.type
+        const block = blocks.find(b => b.id === port.blockId)
+
+        if (block) {
+            if (
+                port.type  === "input" && 
+                block.inputs.some(input => input.inputPort === port.port)
+            ) {
+                return false
+            }
+
+            if (
+                port.type === "output" && 
+                block.outputs.some(output => output.outputPort === port.port)
+            ) {
+                return false
+            }
+        }
+
+        return !getIsSelectedPort(port)
+    }
+
+    const getIsCanSelectedEnd = (port: PortInfo) => {
+        return isSelecting && getIsCanSelectedPort(port) && selectedPort.port !== port.port
     }
 
     const selectPort = (currentPort: PortInfo) => {
-        if (!selectedPort) {
-            setSelectedPort(currentPort)
+        if (!getIsCanSelectedPort(currentPort)) {
             return
         }
 
-        if (selectedPort.blockId === currentPort.blockId) {
+        if (!selectedPort) {
+            setSelectedPort(currentPort)
             return
         }
 
@@ -39,7 +62,10 @@ export const useCreateRelation = () => {
                 inputPort: selectedPort.port,
                 outputId: currentPort.blockId,
                 outputPort: currentPort.port
-            }).then(() => setSelectedPort(undefined))
+            }).then(() => {
+                setSelectedPort(undefined)
+                onRelationCreated?.()
+            })
         }
 
         if (selectedPort.type === "output") {
@@ -52,7 +78,10 @@ export const useCreateRelation = () => {
                 inputPort: currentPort.port,
                 outputId: selectedPort.blockId,
                 outputPort: selectedPort.port
-            }).then(() => setSelectedPort(undefined))
+            }).then(() => {
+                setSelectedPort(undefined)
+                onRelationCreated?. ()
+            }) 
         }
     }
 
@@ -63,7 +92,7 @@ export const useCreateRelation = () => {
     return {
         isSelecting,
         getIsSelected: getIsSelectedPort,
-        getIsCanSelected: getIsCanSelectedPort,
+        getIsCanSelectedEnd,
         selectPort,
         unselectPort
     }
