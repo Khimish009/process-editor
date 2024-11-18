@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./styles.module.css"
-import { FlowPosition } from "../../model/types/flow"
+import { FlowPosition } from "../../domain/types/flow"
 
 export const Layout = ({
     onClick,

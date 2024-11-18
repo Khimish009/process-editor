@@ -2,13 +2,13 @@
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
+}   
+ 
 .port.selected .target {
     background-color: green;
 }
 
-.port.otherSelected .target {
+.port.canEndSelection .target {
     background-color: blue;
 }
 

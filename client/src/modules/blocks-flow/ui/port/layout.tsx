@@ -5,19 +5,19 @@ export const Layout = ({
     text,
     type,
     isSelected,
-    isCanSelected,
+    isCanEndSelection,
     onTargetClick
 }: { 
     text: string
     type: "input" | "output"
     isSelected: boolean
-    isCanSelected: boolean
+    isCanEndSelection?: boolean
     onTargetClick: () => void
-}) => {
+}) => { 
     return (
         <div className={clsx(styles.port, styles[type], {
             [styles.selected]: isSelected,
-            [styles.otherSelected]: isCanSelected,
+            [styles.canEndSelection]: isCanEndSelection,
         })}>
             <div className={styles.label}>{text}</div>
             <button 
