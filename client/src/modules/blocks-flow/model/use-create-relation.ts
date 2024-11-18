@@ -6,10 +6,10 @@ import { isPortTypeSame, portIsAlreadyInUse, portsAreEqual, type Port } from "..
 export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => void) => {
     const [selectedPort, setSelectedPort] = useState<Port>()
 
-    const isSelecting = !!selectedPort
+    const isSelection = !!selectedPort
 
     const getIsSelectedPort = (port: Port) => {
-        return isSelecting && portsAreEqual(port, selectedPort)
+        return isSelection && portsAreEqual(port, selectedPort)
     }
 
     const getIsCanStartSelection = (port: Port) => !selectedPort && !portIsAlreadyInUse(blocks, port)
@@ -57,6 +57,7 @@ export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => voi
     }
 
     return {
+        isSelection,
         selectPort,
         unselectPort,
         getIsSelectedPort,

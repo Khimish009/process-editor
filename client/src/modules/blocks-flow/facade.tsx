@@ -22,7 +22,14 @@ export const Facade = ({
 
     return (
         <Root 
-            field={<Field onClick={onFlowClick} />}
+            field={
+                <Field 
+                    onClick={createRelation.isSelection 
+                        ? createRelation.unselectPort
+                        : onFlowClick
+                    } 
+                />
+            }
             blocks={blocks.map(block => (
                 <BlockView
                     key={block.id} 
