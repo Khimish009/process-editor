@@ -9,7 +9,7 @@ export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => voi
     const isSelecting = !!selectedPort
 
     const getIsSelectedPort = (port: Port) => {
-        return isSelecting && !portsAreEqual(port, selectedPort)
+        return isSelecting && portsAreEqual(port, selectedPort)
     }
 
     const getIsCanStartSelection = (port: Port) => !selectedPort && !portIsAlreadyInUse(blocks, port)
