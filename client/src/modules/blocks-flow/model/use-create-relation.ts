@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BlocksFlowApi } from "../api"
-import type { Block } from "../domain/types/block"
+import type { Block } from "../domain/block"
 import { isPortTypeSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/ports"
 
 export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => void) => {

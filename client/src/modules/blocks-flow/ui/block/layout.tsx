@@ -1,5 +1,6 @@
+import type { Block } from "../../domain/block"
+import type { BlockTypesRecord, PortConfig } from "../../domain/block-types"
 import styles from "./styles.module.css"
-import { Block, BlockTypesRecord, PortConfig } from "../../domain/types/flow"
 import React from "react"
 
 export const Layout = ({

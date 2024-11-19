@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { BlocksFlowApi } from "../api"
-import type { BlockTypes, BlockTypesRecord } from "../domain/types/block-types"
+import type { BlockTypes, BlockTypesRecord } from "../domain/block-types"
 
 export const useBlockTypes = () => {
     const [isLoading, setIsLoading] = useState(false)

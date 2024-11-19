@@ -1,4 +1,4 @@
-import { BlockTypes } from "./domain/types/block-types"
+import { BlockTypes } from "./domain/block-types"
 
 async function getBlocksTypes() {
     return await fetch("/api/blocks/types").then(res => res.json() as Promise<BlockTypes[]>)
