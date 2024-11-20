@@ -23,8 +23,8 @@ export const Layout = ({
     const callbackRef = useCallback((ref: HTMLButtonElement | null) => {
         if (ref) {
             onTargetPosition?.(id, {
-                x: ref.offsetLeft + ref.clientWidth / 2,
-                y: ref.offsetHeight + ref.clientHeight / 2,
+                x: ref.offsetLeft + ref.offsetWidth / 2,
+                y: ref.offsetTop + ref.offsetHeight / 2,
             })
         } else {
             onTargetPosition?.(id)

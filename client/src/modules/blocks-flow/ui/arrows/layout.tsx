@@ -1,9 +1,9 @@
 import styles from "./styles.module.css"
 
-export const Layout = () => {
+export const Layout = ({ arrowD }: { arrowD: string }) => {
     return (
         <svg className={styles.arrows}>
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="none" stroke="black" />
+            <path d={arrowD} fill="none" stroke="black" />
         </svg>
     )
 }

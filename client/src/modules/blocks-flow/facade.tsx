@@ -60,7 +60,7 @@ export const Facade = ({
                     }}
                 />
             ))}
-            arrows={<Arrows />}
+            arrows={<Arrows arrowD={renderArrows.arrowD} />}
         />
     )
 }
