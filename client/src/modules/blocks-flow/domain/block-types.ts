@@ -4,10 +4,10 @@ export type PortConfig = {
 }
 
 export type BlockTypes = {
-    type: string
-    label: string
-    outputs: PortConfig[]
-    inputs: PortConfig[]
-}
-
-export type BlockTypesRecord = Record<string, BlockTypes | undefined>
+    type: string;
+    label: string;
+    outputs?: PortConfig[];
+    inputs?: PortConfig[];
+};
+  
+export type BlockTypesRecord = Record<string, BlockTypes | undefined>;

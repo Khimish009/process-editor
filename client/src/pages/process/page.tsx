@@ -1,7 +1,7 @@
 import { useProcess } from "./model/use-process"
 import { Root } from "./ui/root"
 import { useProcessId } from "./model/use-process-id"
-import { BloksFlow } from "../../modules/blocks-flow"
+import { BlocksFlow } from "../../modules/blocks-flow"
 import { CreateBlockModal, useStartCreate } from "../../modules/manage-block"
 
 export const Page = () => {
@@ -13,7 +13,7 @@ export const Page = () => {
         <Root 
             process={process.data}
             flow={process.data && 
-                <BloksFlow 
+                <BlocksFlow 
                     blocks={process.data.blocks}
                     onFlowClick={startCreate}
                     onChanged={process.refetch} 

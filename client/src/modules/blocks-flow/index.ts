@@ -1,1 +1,1 @@
-export { Facade as BloksFlow } from "./facade"
+export { BlocksFlow } from "./facade/blocks-flow"

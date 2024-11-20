@@ -38,6 +38,6 @@ export const portIsAlreadyInUse = (blocks: Block[], port: Port) => {
     return false
 }
 
-export const isPortTypeSame = (a: Port, b: Port) => a.type === b.type
+export const isPortTypesSame = (a?: Port, b?: Port) => a?.type === b?.type
 
 export const getPortId = (port: Port) => `${port.blockId}:${port.type}:${port.port}`

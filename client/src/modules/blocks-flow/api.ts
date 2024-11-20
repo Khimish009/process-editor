@@ -27,7 +27,7 @@ async function deleteRelation(relationId: string) {
     })
 }
 
-export const BlocksFlowApi = {
+export const blocksFlowApi = {
     getBlocksTypes,
     addRelation,
     deleteRelation
