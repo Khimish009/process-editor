@@ -17,8 +17,6 @@ export const portsAreEqual = (a?: Port, b?: Port) => {
 export const portIsAlreadyInUse = (blocks: Block[], port: Port) => {
     const block = blocks.find(b => b.id === port.blockId)
 
-    console.log(block, port.type, port.port)
- 
     if (block) {
         if (
             port.type  === "input" && 

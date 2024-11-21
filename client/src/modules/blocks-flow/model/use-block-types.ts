@@ -1,5 +1,5 @@
 import { blocksFlowApi } from "../api"
-import type { BlockTypes, BlockTypesRecord } from "../domain/block-types"
+import { getBlockTypesRecord, type BlockTypes, type BlockTypesRecord } from "../domain/block-types"
 import { create } from "zustand"
 
 type Store = {
@@ -24,13 +24,7 @@ export const useBlockTypes = create<Store>((set, get) => {
     return {
         isLoading: true,
         blockTypes: [],
-        getData: () => {
-            return get().blockTypes.reduce((acc, blockType) => {
-                acc[blockType.type] = blockType
-        
-                return acc
-            }, {} as BlockTypesRecord)
-        },
+        getData: () => getBlockTypesRecord(get().blockTypes),
         refetch: fetchBlockTypes
     }
 })
