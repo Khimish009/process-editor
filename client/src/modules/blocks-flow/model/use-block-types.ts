@@ -1,30 +1,36 @@
-import { useEffect, useState } from "react"
-import { BlocksFlowApi } from "../api"
+import { blocksFlowApi } from "../api"
 import type { BlockTypes, BlockTypesRecord } from "../domain/block-types"
+import { create } from "zustand"
 
-export const useBlockTypes = () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [blockTypes, setBlockTypes] = useState<BlockTypes[]>([])
+type Store = {
+    isLoading: boolean,
+    blockTypes: BlockTypes[]
+    getData: () => BlockTypesRecord
+    refetch: () => void
+}
 
+export const useBlockTypes = create<Store>((set, get) => {
     const fetchBlockTypes = () => {
-        return BlocksFlowApi.getBlocksTypes().then(setBlockTypes)
+        blocksFlowApi.getBlocksTypes().then((blockTypes) => {
+            set({
+                blockTypes,
+                isLoading: false
+            })
+        })
     }
 
-    useEffect(() => {
-        setIsLoading(true)
-
-        fetchBlockTypes().finally(() => setIsLoading(false))
-    }, [])
-
-    const blockTypesRecord = blockTypes.reduce((acc, blockType) => {
-        acc[blockType.type] = blockType
-
-        return acc
-    }, {} as BlockTypesRecord)
+    fetchBlockTypes()
 
     return {
-        isLoading,
-        data: blockTypesRecord,
+        isLoading: true,
+        blockTypes: [],
+        getData: () => {
+            return get().blockTypes.reduce((acc, blockType) => {
+                acc[blockType.type] = blockType
+        
+                return acc
+            }, {} as BlockTypesRecord)
+        },
         refetch: fetchBlockTypes
     }
-}
+})

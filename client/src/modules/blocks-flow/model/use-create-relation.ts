@@ -1,66 +1,56 @@
-import { useState } from "react"
-import { BlocksFlowApi } from "../api"
+import { blocksFlowApi } from "../api"
 import type { Block } from "../domain/block"
-import { isPortTypeSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/ports"
+import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/port"
+import { create } from "zustand"
 
-export const useCreateRelation = (blocks: Block[], onRelationCreated?: () => void) => {
-    const [selectedPort, setSelectedPort] = useState<Port>()
 
-    const isSelection = !!selectedPort
+type Store = {
+    selectedPort: Port | undefined
+    isSelection: () => boolean,
+    selectPort: (port: Port, blocks: Block[], onSuccess?: () => void) => void,
+    unselectPort: (port: Port) => void,
+    getIsSelectedPort: (port: Port) => boolean,
+    getIsCanStartSelection: (port: Port, blocks: Block[]) => boolean,
+    getIsCanEndSelection: (port: Port, blocks: Block[]) => boolean,
+}
 
-    const getIsSelectedPort = (port: Port) => {
-        return isSelection && portsAreEqual(port, selectedPort)
-    }
-
-    const getIsCanStartSelection = (port: Port) => !selectedPort && !portIsAlreadyInUse(blocks, port)
-
-    const getIsCanEndSelection = (port: Port) => {
-        return (
-            selectedPort &&
-            !portIsAlreadyInUse(blocks, port) && 
-            !isPortTypeSame(selectedPort, port) &&
-            !portsAreEqual(selectedPort, port)
-        )
-    }
-
-    const selectPort = (port: Port) => {
-        if (getIsCanStartSelection(port)) {
-            setSelectedPort(port) 
+export const useCreateRelation = create<Store>((set, get) => ({
+    selectedPort: undefined,
+    isSelection: () => !!get().selectedPort,
+    selectPort: (port, blocks, onSuccess) => {
+        if (get().getIsCanStartSelection(port, blocks)) {
+            set({ selectedPort: port }) 
             return
         }
 
-        if (getIsCanEndSelection(port)) {
+        if (get().getIsCanEndSelection(port, blocks)) {
             const params = port.type === "input" ?
             {
                 inputId: port!.blockId,
                 inputPort: port!.port,
-                outputId: selectedPort!.blockId,
-                outputPort: selectedPort!.port
+                outputId: get().selectedPort!.blockId,
+                outputPort: get().selectedPort!.port
             } :
             {
-                inputId: selectedPort!.blockId,
-                inputPort: selectedPort!.port,
+                inputId: get().selectedPort!.blockId,
+                inputPort: get().selectedPort!.port,
                 outputId: port!.blockId,
                 outputPort: port!.port
             }
 
-            return  BlocksFlowApi.addRelation(params).then(() => {
-                setSelectedPort(undefined)
-                onRelationCreated?.()
+            return blocksFlowApi.addRelation(params).then(() => {
+                set({ selectedPort: undefined })
+                onSuccess?.()
             })
         }
-
-    }
-
-    const unselectPort = () => {
-        setSelectedPort(undefined)
-    }
-
-    return {
-        isSelection,
-        selectPort,
-        unselectPort,
-        getIsSelectedPort,
-        getIsCanEndSelection
-    }
-}
+    },
+    getIsSelectedPort: (port) => !!get().isSelection && portsAreEqual(port, get().selectedPort),
+    getIsCanStartSelection: (port, blocks) => !get().selectedPort && !portIsAlreadyInUse(blocks, port),
+    getIsCanEndSelection: (port, blocks) => (
+        !!get().selectedPort &&
+        !portIsAlreadyInUse(blocks, port) && 
+        !isPortTypesSame(get().selectedPort, port) &&
+        !portsAreEqual(get().selectedPort, port)
+    ),
+    unselectPort: () => set({ selectedPort: undefined })
+}))

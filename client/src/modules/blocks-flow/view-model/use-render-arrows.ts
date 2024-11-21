@@ -1,32 +1,32 @@
-import { useCallback, useMemo, useState } from "react"
 import { Position, sumPostition } from "../domain/position"
 import { Block } from "../domain/block"
-import { getPortId } from "../domain/ports"
+import { getPortId } from "../domain/port"
+import { create } from "zustand"
 
-export const useRenderArrows = (blocks: Block[]) => {
-    const [portPositions, setPortPositions] = useState<Record<string, Position>>()
+type Store = {
+    portPositions: Record<string, Position>
+    setPortPosition: (id: string, position?: Position) => void
+    getArrowsD: (blocks: Block[]) => string
+}
 
-    const setPortPosition = useCallback((id: string, position?: Position) => {
-        setPortPositions((prev) => {
-            if (position) {
-                return { ...prev, [id]: position }
-            }
+export const useRenderArrows = create<Store>((set, get) => ({
+    portPositions: {},
+    setPortPosition: (id, position) => {
+        if (position) {
+            set({
+                portPositions: { ...get().portPositions, [id]: position }
+            })
+        }
+    },
+    getArrowsD: (blocks: Block[]) => {
+        let d = '';
 
-            return prev
-        })
-    }, [])
-
-    const blocksRecord = useMemo(() => {
-        return blocks.reduce((acc, block) => {
+        const blocksRecord = blocks.reduce((acc, block) => {
             if (!acc[block.id]) {
                 acc[block.id] = block
             }
             return acc
         }, {} as Record<string, Block | undefined>)
-    }, [blocks])
-
-    const arrowD = useMemo(() => {
-        let d = '';
 
         for(const block of blocks) {
             for(const input of block.inputs) {
@@ -42,8 +42,8 @@ export const useRenderArrows = (blocks: Block[]) => {
                     type: "output",
                 })
 
-                const inputPortPosition = portPositions?.[inputPortId]
-                const outputPortPosition = portPositions?.[outputPortId]
+                const inputPortPosition = get().portPositions?.[inputPortId]
+                const outputPortPosition = get().portPositions?.[outputPortId]
                 const inputBlock = blocksRecord[input.inputId]
                 const outputBlock = blocksRecord[input.outputId]
 
@@ -64,10 +64,5 @@ export const useRenderArrows = (blocks: Block[]) => {
         }
 
         return d
-    }, [blocks, portPositions, blocksRecord])
-
-    return {
-        arrowD,
-        setPortPosition
-    }
-}
+    },
+}))
