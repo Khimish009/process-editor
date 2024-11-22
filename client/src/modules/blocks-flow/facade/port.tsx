@@ -29,7 +29,7 @@ export function Port({
 
     const getIsSelectedPort = useCreateRelation(state => state.getIsSelectedPort(portInfo))
     const getIsCanEndSelection = useCreateRelation(state => state.getIsCanEndSelection(portInfo, blocks))
-    const selectPort = useCreateRelation(state => state.selectPort(portInfo, blocks, onCreateArrow))
+    const selectPort = useCreateRelation((state) => state.selectPort);
     const setPortPosition = useRenderArrows(state => state.setPortPosition)
 
     return ( 
@@ -40,7 +40,7 @@ export function Port({
             text={label}
             isSelected={getIsSelectedPort}
             isCanEndSelection={getIsCanEndSelection}
-            onTargetClick={() => selectPort}
+            onTargetClick={() => selectPort(portInfo, blocks, onCreateArrow)}
             onTargetPosition={setPortPosition}
         />
     )
