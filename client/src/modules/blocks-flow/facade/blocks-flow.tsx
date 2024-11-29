@@ -34,6 +34,7 @@ export const BlocksFlow = ({
                     blockTypesRecord={blockTypes}
                     renderPort={(type, { port, label }) => (
                         <Port
+                            key={`${block.id}${type}${label}`} 
                             type={type}
                             port={port} 
                             label={label}
