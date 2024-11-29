@@ -15,11 +15,13 @@ export const useProcessList = () => {
 
     const create = async (name: string) => {
         await processApi.create(name)
+
         refetch()
     }
 
     const deleteProcess = async (processId: string) => {
         await processApi.deleteProcess(processId)
+
         refetch()
     }
 

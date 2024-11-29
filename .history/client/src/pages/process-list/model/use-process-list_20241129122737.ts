@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { processApi } from "../api";
 import { useLoad } from "../../../shared/use-load";
 
@@ -11,15 +12,17 @@ export const useProcessList = () => {
         data: processList = [],
         isLoading,
         refetch
-    } = useLoad(() => processApi.list())
+    } = useLoad(processApi.list)
 
     const create = async (name: string) => {
         await processApi.create(name)
+
         refetch()
     }
 
     const deleteProcess = async (processId: string) => {
         await processApi.deleteProcess(processId)
+
         refetch()
     }
 

@@ -20,6 +20,7 @@ export const useProcessList = () => {
 
     const deleteProcess = async (processId: string) => {
         await processApi.deleteProcess(processId)
+
         refetch()
     }
 
