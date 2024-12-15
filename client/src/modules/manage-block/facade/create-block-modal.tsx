@@ -1,8 +1,8 @@
 import { useId } from "react"
-import { CreateForm } from "../ui/create-form"
 import { Modal } from "../ui/modal"
 import { SubmitButton } from "../ui/submit-button"
 import { useCreateBlock } from "../model/useCreateBlock"
+import { CreateForm } from "./create-form"
 
 export const CreateBlockModal = ({ 
     processId,
@@ -22,11 +22,10 @@ export const CreateBlockModal = ({
         <Modal 
             title="Create block"
             body={
-                <CreateForm 
+                <CreateForm
                     formId={formId}
-                    onSubmit={(data) =>
-                        createBlock.submitCreate({ processId, ...data }).then(onSuccess)
-                    } 
+                    onSuccess={onSuccess}
+                    processId={processId}
                 />
             }
             footer={<SubmitButton formId={formId} />}

@@ -12,7 +12,7 @@ export type WebhookFormData = {
     method: string
 }
 
-export const useFormCreate = (onSubmit: (formData: FormData) => void) => {
+export const useCreateForm = (onSubmit: (formData: FormData) => void) => {
     const [formData, setFormData] = useState<FormData>({
         name: "Start",
         type: BlockTypes.Start,
