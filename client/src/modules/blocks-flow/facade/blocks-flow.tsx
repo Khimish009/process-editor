@@ -7,7 +7,6 @@ import { BlockView } from "../ui/block"
 import { Field } from "../ui/field"
 import { Port } from "./port"
 import { Root } from "../ui/root"
-import { useRenderArrows } from "../view-model/use-render-arrows"
 
 export const BlocksFlow = ({
     blocks,
@@ -21,12 +20,11 @@ export const BlocksFlow = ({
     const blockTypes = useBlockTypes((state) => state.getData());
     const isSelection = useCreateRelation(state => state.isSelection())
     const unselectPort = useCreateRelation(state => state.unselectPort)
-    const arrowsD = useRenderArrows(state => state.getArrowsD(blocks)) 
 
     return (
         <Root 
             field={<Field onClick={isSelection ? unselectPort : onFlowClick} />}
-            arrows={<Arrows arrowsD={arrowsD} />}
+            arrows={<Arrows blocks={blocks} />}
             blocks={blocks.map(block => (
                 <BlockView
                     key={block.id} 
