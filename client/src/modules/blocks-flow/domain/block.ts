@@ -1,5 +1,7 @@
+export type BlockId = string
+
 export type Block = {
-    id: string
+    id: BlockId
     name: string
     type: string
     data: string
@@ -7,12 +9,13 @@ export type Block = {
     x: number
     y: number
 
-    inputs: Dependency[]
-    outputs: Dependency[]
+    inputs: Relation[]
+    outputs: Relation[]
 }
+export type RelationId = string
 
-export type Dependency = {
-    id: string
+export type Relation = {
+    id: RelationId
     inputId: string 
     inputPort: string
     outputId: string
