@@ -1,1 +1,1 @@
-export { Layout as Arrow} from "./layout"
+export { Layout as ArrowUI } from "./layout"

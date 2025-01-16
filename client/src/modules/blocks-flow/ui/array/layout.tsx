@@ -1,14 +1,16 @@
-import { Block } from "../../domain/block";
+import { Block, Relation } from "../../domain/block";
 import { getPortId } from "../../domain/port";
-import { sumPosition } from "../../domain/position";
-import { usePortPositions } from "../../view-model/use-ports-positions";
-import styles from "./styles.module.css"
+import { Position, sumPosition } from "../../domain/position";
 
-export const Layout = ({ blocks }: { blocks: Block[] }) => {
-    const portPositions = usePortPositions((state) => state.portPositions);
-
-    let d = ``;
-  
+export const Layout = ({ 
+	blocks,
+	relation,
+	portPositions
+}: { 
+	blocks: Block[]
+	relation: Relation
+	portPositions: Record<string, Position>
+}) => {
     const blocksRecord = blocks.reduce<Record<string, Block | undefined>>(
       (acc, block) => {
         acc[block.id] = block;
@@ -17,24 +19,22 @@ export const Layout = ({ blocks }: { blocks: Block[] }) => {
       {}
     );
   
-    for (const block of blocks) {
-      for (const input of block.inputs) {
         const inputPortId = getPortId({
-          blockId: input.inputId,
-          port: input.inputPort,
+          blockId: relation.inputId,
+          port: relation.inputPort,
           type: "input",
         });
   
         const outputPortId = getPortId({
-          blockId: input.outputId,
-          port: input.outputPort,
+          blockId: relation.outputId,
+          port: relation.outputPort,
           type: "output",
         });
   
         const inputPortPosition = portPositions?.[inputPortId];
         const outputPortPosition = portPositions?.[outputPortId];
-        const inputBlock = blocksRecord[input.inputId];
-        const outputBlock = blocksRecord[input.outputId];
+        const inputBlock = blocksRecord[relation.inputId];
+        const outputBlock = blocksRecord[relation.outputId];
   
         if (
           !inputPortPosition ||
@@ -42,19 +42,13 @@ export const Layout = ({ blocks }: { blocks: Block[] }) => {
           !inputBlock ||
           !outputBlock
         ) {
-          continue;
+          return null;
         }
   
         const inputPosition = sumPosition(inputBlock, inputPortPosition);
         const outputPosition = sumPosition(outputBlock, outputPortPosition);
   
-        d += `M ${inputPosition.x} ${inputPosition.y} L ${outputPosition.x} ${outputPosition.y} `;
-      }
-    }
+    const d = `M ${inputPosition.x} ${inputPosition.y} L ${outputPosition.x} ${outputPosition.y}`;
   
-    return (
-        <svg className={styles.arrows}>
-            <path d={d} fill="none" stroke="black" />
-        </svg>
-    )
+    return <path d={d} fill="none" stroke="black" />
 }
