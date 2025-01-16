@@ -1,20 +1,7 @@
-import React from "react"
 import styles from "./styles.module.css"
-import { FlowPosition } from "../../domain/types/flow"
 
-export const Layout = ({
-    onClick,
-}: {
-    onClick: ({ x, y }: FlowPosition) => void
-}) => {
-    const handleClick = (e: React.MouseEvent) => {
-        onClick({
-            x: e.clientX,
-            y: e.clientY
-        })
-    }
+export const Layout = () => {
     return (
-        <div className={styles.field} onClick={handleClick}>
-        </div>
+        <div className={styles.field}></div>
     )
 }
