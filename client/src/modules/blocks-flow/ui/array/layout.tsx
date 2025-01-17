@@ -1,24 +1,16 @@
-import { Block, Relation } from "../../domain/block";
-import { getPortId } from "../../domain/port";
+import { Block, BlockId, Relation } from "../../domain/block";
+import { getPortId, PortId } from "../../domain/port";
 import { Position, sumPosition } from "../../domain/position";
 
 export const Layout = ({ 
-	blocks,
-	relation,
+	blocksRecord,
+	relation, 
 	portPositions
-}: { 
-	blocks: Block[]
+}: {
+	blocksRecord: Record<BlockId, Block>
 	relation: Relation
-	portPositions: Record<string, Position>
-}) => {
-    const blocksRecord = blocks.reduce<Record<string, Block | undefined>>(
-      (acc, block) => {
-        acc[block.id] = block;
-        return acc;
-      },
-      {}
-    );
-  
+	portPositions: Record<PortId, Position>
+}) => {  
         const inputPortId = getPortId({
           blockId: relation.inputId,
           port: relation.inputPort,

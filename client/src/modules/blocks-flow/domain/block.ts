@@ -23,3 +23,13 @@ export type Relation = {
 }
 
 export const blocksRelations = (blocks: Block[]): Relation[] => blocks.flatMap(({ inputs }) => inputs)
+
+export const blocksRecord = (blocks: Block[]): Record<BlockId, Block> => {
+    return blocks.reduce<Record<BlockId, Block>>(
+        (acc, block) => {
+        acc[block.id] = block;
+        return acc;
+        },
+        {}
+    )
+};
