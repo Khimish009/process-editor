@@ -19,7 +19,7 @@ export const BlocksFlow = ({
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
     const isSelection = useCreateRelation(state => state.isSelection())
-    const unselectPort = useCreateRelation(state => state.unselectPort())
+    const unselectPort = useCreateRelation(state => state.unselectPort)
     const portPositions = usePortPositions()
 
     return (
