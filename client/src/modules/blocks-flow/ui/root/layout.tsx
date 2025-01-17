@@ -9,7 +9,7 @@ export const Layout = ({
 }: {
     blocks: React.ReactNode
     arrows: React.ReactNode
-    field: ({ x, y }: Position) => void
+    onFieldClick: ({ x, y }: Position) => void
 }) => {
     const handleFieldClick = (e: React.MouseEvent) => {
         onFieldClick({
@@ -20,7 +20,7 @@ export const Layout = ({
 
     return (
         <div className={styles.root}>
-            <div className={styles.field} onClick={handleFieldClick}></div> 
+            <div className={styles.field} onClick={handleFieldClick}></div>
             {blocks}
             <svg className={styles.arrows}>{arrows}</svg>
         </div>

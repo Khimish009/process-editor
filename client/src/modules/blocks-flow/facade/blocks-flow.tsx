@@ -1,12 +1,12 @@
 import type { Position } from "../domain/position"
-import type { Block } from "../domain/block"
+import { blocksRelations, type Block } from "../domain/block"
 import { useBlockTypes } from "../model/use-block-types"
 import { useCreateRelation } from "../model/use-create-relation"
-import { Arrows } from "../ui/arrows"
 import { BlockView } from "../ui/block"
-import { Field } from "../ui/field"
 import { Port } from "./port"
 import { Root } from "../ui/root"
+import { ArrowUI } from "../ui/array"
+import { usePortPositions } from "../view-model/use-ports-positions"
 
 export const BlocksFlow = ({
     blocks,
@@ -19,12 +19,21 @@ export const BlocksFlow = ({
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
     const isSelection = useCreateRelation(state => state.isSelection())
-    const unselectPort = useCreateRelation(state => state.unselectPort)
+    const unselectPort = useCreateRelation(state => state.unselectPort())
+    const portPositions = usePortPositions()
 
     return (
-        <Root 
-            field={<Field onClick={isSelection ? unselectPort : onFlowClick} />}
-            arrows={<Arrows blocks={blocks} />}
+        <Root
+            onFieldClick={isSelection ? unselectPort : onFlowClick}  
+            arrows={blocksRelations(blocks).map(relation => (
+                    <ArrowUI
+                        key={relation.id} 
+                        blocks={blocks} 
+                        portPositions={portPositions}
+                        relation={relation} 
+                    />
+                ))
+            }
             blocks={blocks.map(block => (
                 <BlockView
                     key={block.id} 

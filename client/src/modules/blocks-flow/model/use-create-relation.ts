@@ -8,7 +8,7 @@ type Store = {
     selectedPort: Port | undefined
     isSelection: () => boolean,
     selectPort: (port: Port, blocks: Block[], onSuccess?: () => void) => void,
-    unselectPort: (port: Port) => void,
+    unselectPort: () => void,
     getIsSelectedPort: (port: Port) => boolean,
     getIsCanStartSelection: (port: Port, blocks: Block[]) => boolean,
     getIsCanEndSelection: (port: Port, blocks: Block[]) => boolean,

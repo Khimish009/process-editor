@@ -21,3 +21,5 @@ export type Relation = {
     outputId: string
     outputPort: string
 }
+
+export const blocksRelations = (blocks: Block[]): Relation[] => blocks.flatMap(({ inputs }) => inputs)
