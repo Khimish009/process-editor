@@ -14,6 +14,7 @@ export const Layout = ({
                 className={styles.input}
                 name="url"
                 type="text"
+                required
                 value={formData.url}
                 onChange={(e) => onChangeFormData({ ...formData, url: e.target.value })}
             />
