@@ -1,3 +1,4 @@
+import { BlockId } from "./domain/block"
 import { BlockTypes } from "./domain/block-types"
 
 async function getBlocksTypes() {
@@ -27,8 +28,15 @@ async function deleteRelation(relationId: string) {
     })
 }
 
+async function deleteBlock(blockId: BlockId) {
+    return fetch(`/api/blocks/${blockId}`, {
+        method: "DELETE"
+    })
+}
+
 export const blocksFlowApi = {
     getBlocksTypes,
     addRelation,
-    deleteRelation
+    deleteRelation,
+    deleteBlock,
 }
