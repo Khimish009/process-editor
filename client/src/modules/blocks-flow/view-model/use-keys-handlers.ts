@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react"
 
 export const useKeysHandlers = ({
-    onDelete
+    onDelete,
+    onCancelCreate
 }: {
     onDelete?: () => void
+    onCancelCreate: () => void
 }) => {
     const onDeleteRef = useRef(onDelete) 
     onDeleteRef.current = onDelete
@@ -12,6 +14,11 @@ export const useKeysHandlers = ({
         if (e.key === "Backspace" || e.key === "Delete") {
             e.preventDefault()
             onDeleteRef.current?.()
+        }
+
+        if (e.key === "Escape") {
+            e.preventDefault()
+            onCancelCreate()
         }
     }
 

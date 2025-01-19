@@ -2,12 +2,13 @@ import { useProcess } from "./model/use-process"
 import { Root } from "./ui/root"
 import { useProcessId } from "./model/use-process-id"
 import { BlocksFlow } from "../../modules/blocks-flow"
-import { CreateBlockModal, useStartCreate } from "../../modules/manage-block"
+import { CreateBlockModal, useCancelCreate, useStartCreate } from "../../modules/manage-block"
 
 export const Page = () => {
     const processId = useProcessId()
     const process = useProcess(processId)
     const startCreate = useStartCreate()
+    const cancelCreate = useCancelCreate()
 
     return (
         <Root 
@@ -16,6 +17,7 @@ export const Page = () => {
                 <BlocksFlow 
                     blocks={process.data.blocks}
                     onFlowClick={startCreate}
+                    onCancelCreate={cancelCreate}
                     onChanged={process.refetch} 
                 />
             }

@@ -13,11 +13,13 @@ import { useSelected } from "../model/use-selected"
 export const BlocksFlow = ({
     blocks,
     onFlowClick, 
-    onChanged
+    onChanged,
+    onCancelCreate
 }: {
     blocks: Block[],
     onFlowClick: (position: Position) => void
     onChanged: () => void
+    onCancelCreate: () => void
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
     const isSelection = useCreateRelation(state => state.isSelection())
@@ -32,7 +34,8 @@ export const BlocksFlow = ({
     })
 
     useKeysHandlers({ 
-        onDelete: deleteRelations
+        onDelete: deleteRelations,
+        onCancelCreate
     })
 
     return (
