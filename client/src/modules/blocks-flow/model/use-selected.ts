@@ -5,6 +5,7 @@ type Store = {
 	selectedRelations: Record<RelationId, boolean>
 	toggleRelation: (id: RelationId) => void
 	getSelectedRelationsArray: () => RelationId[]
+	resetSelectedRelations: () => void
 }
 
 export const useSelected = create<Store>((set, get) => ({
@@ -21,5 +22,6 @@ export const useSelected = create<Store>((set, get) => ({
 		return Object.keys(get().selectedRelations).filter(id => {
 			return get().selectedRelations[id]
 		})
-	}
+	},
+	resetSelectedRelations: () => set({ selectedRelations: {} })
 }))
