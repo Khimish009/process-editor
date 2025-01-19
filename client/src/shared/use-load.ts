@@ -4,16 +4,11 @@ export const useLoad = <T>(fetcher: () => Promise<T>) => {
     const [data, setData] = useState<T>()
     const [isLoading, setIsLoading] = useState(true)
 
-    const fetch = () => {
-        setIsLoading(true)
-
-        fetcher()
-            .then(setData)
-            .finally(() => setIsLoading(false))
-    }
+    const fetch = () => fetcher().then(setData)
 
     useEffect(() => {
-        fetch()
+        setIsLoading(true)
+        fetch().finally(() => setIsLoading(false))
     }, [])
 
 
