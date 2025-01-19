@@ -1,6 +1,6 @@
 import { Block, blocksRecord, blocksRelations } from "../domain/block"
 import { useSelected } from "../model/use-selected"
-import { ArrowUI } from "../ui/array"
+import { ArrowUI } from "../ui/arrow"
 import { usePortPositions } from "../view-model/use-ports-positions"
 
 export const Arrows = ({ blocks }: { blocks: Block[] }) => {
