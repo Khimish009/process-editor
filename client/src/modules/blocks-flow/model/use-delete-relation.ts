@@ -4,10 +4,12 @@ import { RelationId } from "../domain/block"
 
 export const useDeleteRelation = ({
     getRelationsToDelete,
-    onComplete
+    onComplete,
+    afterComplete
 }: {
     getRelationsToDelete: () => RelationId[]
-    onComplete: Array<() => void>
+    onComplete: () => Promise<void>
+    afterComplete: () => void
 }) => {
     const [isLoading, setIsLoading] = useState(false)
 
@@ -15,9 +17,10 @@ export const useDeleteRelation = ({
         setIsLoading(true)
         const ids = getRelationsToDelete()
         await Promise.allSettled(ids.map(id => blocksFlowApi.deleteRelation(id)))
+        await onComplete()
 
-        onComplete.forEach(onComplete => onComplete())
         setIsLoading(false)
+        afterComplete()
     }
 
     return {

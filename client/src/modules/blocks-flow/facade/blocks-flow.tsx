@@ -18,7 +18,7 @@ export const BlocksFlow = ({
 }: {
     blocks: Block[],
     onFlowClick: (position: Position) => void
-    onChanged: () => void
+    onChanged: () => Promise<void>
     onCancelCreate: () => void
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
@@ -28,9 +28,10 @@ export const BlocksFlow = ({
     const getSelectedRelations = useSelected(state => state.getSelectedRelationsArray)
     const resetSelectedRelations = useSelected(state => state.resetSelectedRelations)
 
-    const { deleteRelations } = useDeleteRelation({
+    const { deleteRelations } = useDeleteRelation({ 
         getRelationsToDelete: getSelectedRelations,  
-        onComplete: [onChanged, resetSelectedRelations]
+        onComplete: onChanged,
+        afterComplete: resetSelectedRelations
     })
 
     useKeysHandlers({ 
