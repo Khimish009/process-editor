@@ -6,6 +6,9 @@ import { BlockView } from "../ui/block"
 import { Port } from "./port"
 import { Root } from "../ui/root"
 import { Arrows } from "./arrows"
+import { useKeysHandlers } from "../view-model/use-keys-handlers"
+import { useDeleteRelation } from "../model/use-delete-relation"
+import { useSelected } from "../model/use-selected"
 
 export const BlocksFlow = ({
     blocks,
@@ -14,11 +17,23 @@ export const BlocksFlow = ({
 }: {
     blocks: Block[],
     onFlowClick: (position: Position) => void
-    onChanged?: () => void
+    onChanged: () => void
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
     const isSelection = useCreateRelation(state => state.isSelection())
     const unselectPort = useCreateRelation(state => state.unselectPort)
+
+    const getSelectedRelations = useSelected(state => state.getSelectedRelationsArray)
+    const resetSelectedRelations = useSelected(state => state.resetSelectedRelations)
+
+    const { deleteRelations } = useDeleteRelation({
+        getRelationsToDelete: getSelectedRelations,  
+        onComplete: [onChanged, resetSelectedRelations]
+    })
+
+    useKeysHandlers({ 
+        onDelete: deleteRelations
+    })
 
     return (
         <Root
