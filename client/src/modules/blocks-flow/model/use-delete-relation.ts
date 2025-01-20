@@ -9,13 +9,9 @@ type Store = {
         onComplete: () => Promise<void>, 
         afterComplete: () => void
     }) => Promise<void>
-    filterDeleted: (
-        relations: Relation[], 
-        relationsToDelete: Record<RelationId, Relation>
-    ) => Relation[]
 }
 
-export const useDeleteRelation = create<Store>((set, get) => ({
+export const useDeleteRelation = create<Store>((set) => ({
     isLoading: false,
     deleteRelations: async ({ relationsToDelete, onComplete, afterComplete }) => {
         set({ isLoading: true })
@@ -24,12 +20,16 @@ export const useDeleteRelation = create<Store>((set, get) => ({
 
         set({ isLoading: false })
         afterComplete()
-    },
-    filterDeleted: (relations, relationsToDelete) => {
-        if (get().isLoading) {
-            return relations.filter(relation => !relationsToDelete[relation.id])
-        } 
-
-        return relations
     }
 }))
+
+export const useFilterDeleted = (
+    relations: Relation[], 
+    relationsToDelete: Record<RelationId, boolean>
+) => {
+    const isLoading = useDeleteRelation(state => state.isLoading)
+
+    return isLoading 
+        ? relations.filter(relation => !relationsToDelete[relation.id])
+        : relations
+}
