@@ -10,40 +10,44 @@ export const useDeleteRelations = (
     }: {
         getRelationsToDelete: () => RelationId[]
         onComplete: () => Promise<void>, 
-        afterComplete: () => void
+        afterComplete?: () => void
     }
 ) => {
-    const setIsLoading = useDeleteStore(state => state.setIsLoading)
+    const setDeletingRelations = useDeleteStore(state => state.setDeletingRelations)
 
     return async () => {
-        setIsLoading(true)
+        const relationsToDelete = getRelationsToDelete()
+        setDeletingRelations(relationsToDelete)
         await Promise.allSettled(
-            getRelationsToDelete().map(id => blocksFlowApi.deleteRelation(id))
+            relationsToDelete.map(id => blocksFlowApi.deleteRelation(id))
         )
-        await onComplete()
-
-        setIsLoading(false)
-        afterComplete()
+        
+        try {
+            afterComplete?.()
+            await onComplete()
+        } finally {
+            setTimeout(() => setDeletingRelations([]))
+        }
     }
 }
 
 export const useOptimisticDeleteRelations = (
     relations: Relation[], 
-    relationsToDelete: Record<RelationId, boolean>
 ) => {
-    const isLoading = useDeleteStore(state => state.isLoading)
+    const deletingRelations = useDeleteStore(state => state.deletingRelations)
+    const filterRelation = (relation: Relation) => !deletingRelations.includes(relation.id)
 
-    return isLoading 
-        ? relations.filter(relation => !relationsToDelete[relation.id])
+    return deletingRelations.length
+        ? relations.filter(filterRelation)
         : relations
 }
 
 type Store = {
-    isLoading: boolean
-    setIsLoading: (isLoading: boolean) => void
+    deletingRelations: RelationId[],
+    setDeletingRelations: (deletingRelations: RelationId[]) => void
 }
 
 const useDeleteStore = create<Store>((set) => ({ 
-    isLoading: false,
-    setIsLoading: (isLoading) => set({ isLoading })
+    deletingRelations: [],
+    setDeletingRelations: (deletingRelations) => set({ deletingRelations })
 }))

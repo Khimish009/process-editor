@@ -11,7 +11,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const toggleRelation = useSelected(state => state.toggleRelation)
 
     let relations = blocksRelations(blocks)
-    relations = useOptimisticDeleteRelations(relations, selected)
+    relations = useOptimisticDeleteRelations(relations)
 
     return (
         <>
