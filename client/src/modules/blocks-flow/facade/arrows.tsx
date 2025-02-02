@@ -1,5 +1,5 @@
 import { Block, blocksRecord, blocksRelations } from "../domain/block"
-import { useFilterDeleted } from "../model/use-delete-relation"
+import { useFilterDeleted } from "../model/delete-relations"
 import { useSelected } from "../model/use-selected"
 import { ArrowUI } from "../ui/arrow"
 import { usePortPositions } from "../view-model/use-ports-positions"

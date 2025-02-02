@@ -2,23 +2,13 @@ import { create } from "zustand"
 import { blocksFlowApi } from "../api"
 import { Relation, RelationId } from "../domain/block"
 
-type Store = {
-    isLoading: boolean
-    setIsLoading: (isLoading: boolean) => void
-}
-
-export const useDeleteStore = create<Store>((set) => ({
-    isLoading: false,
-    setIsLoading: (isLoading) => set({ isLoading })
-}))
-
 export const useDeleteRelation = (
     {
-        relationsToDelete,
+        getRelationsToDelete,
         onComplete,
         afterComplete
     }: {
-        relationsToDelete: RelationId[]
+        getRelationsToDelete: () => RelationId[]
         onComplete: () => Promise<void>, 
         afterComplete: () => void
     }
@@ -27,7 +17,9 @@ export const useDeleteRelation = (
 
     return async () => {
         setIsLoading(true)
-        await Promise.allSettled(relationsToDelete.map(id => blocksFlowApi.deleteRelation(id)))
+        await Promise.allSettled(
+            getRelationsToDelete().map(id => blocksFlowApi.deleteRelation(id))
+        )
         await onComplete()
 
         setIsLoading(false)
@@ -45,3 +37,13 @@ export const useFilterDeleted = (
         ? relations.filter(relation => !relationsToDelete[relation.id])
         : relations
 }
+
+type Store = {
+    isLoading: boolean
+    setIsLoading: (isLoading: boolean) => void
+}
+
+const useDeleteStore = create<Store>((set) => ({ 
+    isLoading: false,
+    setIsLoading: (isLoading) => set({ isLoading })
+}))
