@@ -1,5 +1,5 @@
 import { Block, blocksRecord, blocksRelations } from "../domain/block"
-import { useFilterDeleted } from "../model/delete-relations"
+import { useOptimisticDeleteRelations } from "../model/delete-relations"
 import { useSelected } from "../model/use-selected"
 import { ArrowUI } from "../ui/arrow"
 import { usePortPositions } from "../view-model/use-ports-positions"
@@ -11,7 +11,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const toggleRelation = useSelected(state => state.toggleRelation)
 
     let relations = blocksRelations(blocks)
-    relations = useFilterDeleted(relations, selected)
+    relations = useOptimisticDeleteRelations(relations, selected)
 
     return (
         <>

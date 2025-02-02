@@ -2,7 +2,7 @@ import { create } from "zustand"
 import { blocksFlowApi } from "../api"
 import { Relation, RelationId } from "../domain/block"
 
-export const useDeleteRelation = (
+export const useDeleteRelations = (
     {
         getRelationsToDelete,
         onComplete,
@@ -27,7 +27,7 @@ export const useDeleteRelation = (
     }
 }
 
-export const useFilterDeleted = (
+export const useOptimisticDeleteRelations = (
     relations: Relation[], 
     relationsToDelete: Record<RelationId, boolean>
 ) => {
