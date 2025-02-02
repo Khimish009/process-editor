@@ -1,5 +1,5 @@
 import { blocksFlowApi } from "../api"
-import type { Block } from "../domain/block"
+import type { Block, Relation } from "../domain/block"
 import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/port"
 import { create } from "zustand"
 
@@ -54,3 +54,7 @@ export const useCreateRelation = create<Store>((set, get) => ({
     ),
     unselectPort: () => set({ selectedPort: undefined })
 }))
+
+export const useOptimisticCreateRelations = (relations: Relation[]) => {
+    return relations
+}
