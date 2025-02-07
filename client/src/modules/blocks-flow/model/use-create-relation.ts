@@ -3,56 +3,88 @@ import type { Block, Relation } from "../domain/block"
 import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/port"
 import { create } from "zustand"
 
-export const useUnselectPort = () => {
-    const unselectPort = useCreateRelationStore((state) => state.unselectPort)
-    const isSelection = useCreateRelationStore((state) => !!state.isSelection)
+export const useSelectPort = ({
+    port,
+    blocks,
+    onSuccess
+}: {
+    port: Port, 
+    blocks: Block[], 
+    onSuccess?: () => Promise<void>
+}) => {
+    const { selectedPort, setSelectedPort, unselectPort } = useSelectedPortStore()
 
-    return {
-        isSelection,
-        unselectPort
+    const isSelection = !!selectedPort
+
+    const getIsSelectedPort = () => {
+        if (!selectedPort) {
+            return false
+        }
+
+        return portsAreEqual(port, selectedPort)
     }
-}
 
-export const useCreateRelation = create<Store>((set, get) => ({
-    selectedPort: undefined,
-    isSelection: () => !!get().selectedPort,
-    selectPort: (port, blocks, onSuccess) => {
-        if (get().getIsCanStartSelection(port, blocks)) {
-            set({ selectedPort: port }) 
+    const getIsCanStartSelection = (blocks: Block[]) => {
+        if (selectedPort) {
+            return false
+        }
+
+        return !portIsAlreadyInUse(blocks, port)
+    }
+
+    const getIsCanEndSelection = () => {
+        if (!selectedPort) {
+            return false
+        }
+
+        return !portIsAlreadyInUse(blocks, port) && !isPortTypesSame(selectedPort, port)
+    }
+
+
+    const selectPort = () => {
+        if (getIsCanStartSelection(blocks)) {
+            setSelectedPort(port) 
             return
         }
 
-        if (get().getIsCanEndSelection(port, blocks)) {
+        if (getIsCanEndSelection()) {
             const params = port.type === "input" ?
             {
                 inputId: port!.blockId,
                 inputPort: port!.port,
-                outputId: get().selectedPort!.blockId,
-                outputPort: get().selectedPort!.port
+                outputId: selectedPort!.blockId,
+                outputPort: selectedPort!.port
             } :
             {
-                inputId: get().selectedPort!.blockId,
-                inputPort: get().selectedPort!.port,
+                inputId: selectedPort!.blockId,
+                inputPort: selectedPort!.port,
                 outputId: port!.blockId,
                 outputPort: port!.port
             }
 
             return blocksFlowApi.addRelation(params).then(() => {
-                set({ selectedPort: undefined })
+                unselectPort()
                 onSuccess?.()
             })
         }
-    },
-    getIsSelectedPort: (port) => !!get().isSelection && portsAreEqual(port, get().selectedPort),
-    getIsCanStartSelection: (port, blocks) => !get().selectedPort && !portIsAlreadyInUse(blocks, port),
-    getIsCanEndSelection: (port, blocks) => (
-        !!get().selectedPort &&
-        !portIsAlreadyInUse(blocks, port) && 
-        !isPortTypesSame(get().selectedPort, port) &&
-        !portsAreEqual(get().selectedPort, port)
-    ),
-    unselectPort: () => set({ selectedPort: undefined })
-}))
+    }
+
+    return {
+        isSelection,
+        getIsSelectedPort,
+        getIsCanEndSelection,
+        selectPort
+    }
+}
+
+export const useUnselectPort = () => {
+    const { unselectPort, selectedPort } = useSelectedPortStore()
+
+    return {
+        isSelection: !!selectedPort,
+        unselectPort
+    }
+}
 
 export const useOptimisticCreateRelations = (relations: Relation[]) => {
     return relations
@@ -60,12 +92,12 @@ export const useOptimisticCreateRelations = (relations: Relation[]) => {
 
 type Store = {
     selectedPort: Port | undefined
-    isSelection: () => boolean,
+    setSelectedPort: (port: Port) => void
     unselectPort: () => void,
 }
 
-const useCreateRelationStore = create<Store>((set, get) => ({
+const useSelectedPortStore = create<Store>((set) => ({
     selectedPort: undefined,
-    isSelection: () => !!get().selectedPort,
+    setSelectedPort: (port) => set({ selectedPort: port }),
     unselectPort: () => set({ selectedPort: undefined })
 }))
