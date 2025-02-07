@@ -1,7 +1,7 @@
 import type { Position } from "../domain/position"
 import { type Block } from "../domain/block"
 import { useBlockTypes } from "../model/use-block-types"
-import { useCreateRelation } from "../model/use-create-relation"
+import { useUnselectPort } from "../model/use-create-relation"
 import { BlockView } from "../ui/block"
 import { Port } from "./port"
 import { Root } from "../ui/root"
@@ -18,8 +18,7 @@ export const BlocksFlow = ({
     onChanged: () => Promise<void>
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
-    const isSelection = useCreateRelation(state => state.isSelection())
-    const unselectPort = useCreateRelation(state => state.unselectPort)
+    const { isSelection, unselectPort } = useUnselectPort()
 
     useDelete(onChanged)
 

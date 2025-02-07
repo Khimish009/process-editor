@@ -3,15 +3,14 @@ import type { Block, Relation } from "../domain/block"
 import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/port"
 import { create } from "zustand"
 
+export const useUnselectPort = () => {
+    const unselectPort = useCreateRelationStore((state) => state.unselectPort)
+    const isSelection = useCreateRelationStore((state) => !!state.isSelection)
 
-type Store = {
-    selectedPort: Port | undefined
-    isSelection: () => boolean,
-    selectPort: (port: Port, blocks: Block[], onSuccess?: () => void) => void,
-    unselectPort: () => void,
-    getIsSelectedPort: (port: Port) => boolean,
-    getIsCanStartSelection: (port: Port, blocks: Block[]) => boolean,
-    getIsCanEndSelection: (port: Port, blocks: Block[]) => boolean,
+    return {
+        isSelection,
+        unselectPort
+    }
 }
 
 export const useCreateRelation = create<Store>((set, get) => ({
@@ -58,3 +57,15 @@ export const useCreateRelation = create<Store>((set, get) => ({
 export const useOptimisticCreateRelations = (relations: Relation[]) => {
     return relations
 }
+
+type Store = {
+    selectedPort: Port | undefined
+    isSelection: () => boolean,
+    unselectPort: () => void,
+}
+
+const useCreateRelationStore = create<Store>((set, get) => ({
+    selectedPort: undefined,
+    isSelection: () => !!get().selectedPort,
+    unselectPort: () => set({ selectedPort: undefined })
+}))
