@@ -4,7 +4,7 @@ import { create } from "zustand"
 
 export const useListenMousePosition = () => {
     const unsubscribe = useRef<() => void>()
-    const setPosition = usePositionStore((state) => state.setPosition)
+    const setPosition = usePositionStore((state) => state.setPosition) 
 
     const callbackRef = useCallback((element: HTMLElement | null) => {
         unsubscribe.current?.()
@@ -16,7 +16,7 @@ export const useListenMousePosition = () => {
                     y: event.clientY
                 })
             }
-
+ 
             element.addEventListener("mousemove", listener)
 
             unsubscribe.current = () => element.removeEventListener("mousemove", listener)

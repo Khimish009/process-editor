@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Ref } from "react"
 import styles from "./styles.module.css"
 import type { Position } from "../../domain/position"
 
@@ -6,10 +6,12 @@ export const Layout = ({
     blocks,
     arrows,
     onFieldClick,
+    rootRef,
 }: {
     blocks: React.ReactNode
     arrows: React.ReactNode
     onFieldClick: ({ x, y }: Position) => void
+    rootRef: Ref<HTMLDivElement>
 }) => {
     const handleFieldClick = (e: React.MouseEvent) => {
         onFieldClick({
@@ -19,7 +21,7 @@ export const Layout = ({
     }
 
     return (
-        <div className={styles.root}>
+        <div ref={rootRef} className={styles.root}>
             <div className={styles.field} onClick={handleFieldClick}></div>
             {blocks}
             <svg className={styles.arrows}>{arrows}</svg>

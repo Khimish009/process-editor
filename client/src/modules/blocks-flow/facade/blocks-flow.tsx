@@ -7,6 +7,7 @@ import { Root } from "../ui/root"
 import { Arrows } from "./arrows"
 import { useDelete } from "./use-delete"
 import { useUnselectPort } from "../model/create-relation"
+import { useListenMousePosition } from "../view-model/use-mouse-positions"
 
 export const BlocksFlow = ({
     blocks,
@@ -15,15 +16,17 @@ export const BlocksFlow = ({
 }: {
     blocks: Block[],
     onFlowClick: (position: Position) => void
-    onChanged: () => Promise<void>
+    onChanged: () => Promise<void>,
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
+    const rootRef = useListenMousePosition()
     const { isSelection, unselectPorts } = useUnselectPort()
 
     useDelete(onChanged)
 
     return (
         <Root
+            rootRef={rootRef}
             onFieldClick={isSelection ? unselectPorts : onFlowClick}  
             arrows={<Arrows blocks={blocks} />}
             blocks={blocks.map(block => (
