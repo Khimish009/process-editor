@@ -14,5 +14,5 @@ export const useSelectedPortStore = create<Store>((set) => ({
     selectedEndPort: undefined,
     setSelectedPort: (port) => set({ selectedPort: port }),
     setSelectedEndPort: (port) => set({ selectedEndPort: port }),
-    unselectPorts: () => set({ selectedPort: undefined, selectedEndPort: undefined })
+    unselectPorts: () => set({ selectedPort: undefined })
 }))

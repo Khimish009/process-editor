@@ -43,7 +43,7 @@ export const useSelectPort = ({
             await blocksFlowApi.addRelation(params)
             await onSuccess?.()
 
-            unselectPorts()  // TODO: при слабом интернете, можно из одного порта провести несколько relations
+            unselectPorts()
         }
     }
 

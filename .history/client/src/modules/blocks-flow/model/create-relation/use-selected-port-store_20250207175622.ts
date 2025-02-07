@@ -6,7 +6,7 @@ type Store = {
     selectedEndPort: Port | undefined
     setSelectedPort: (port: Port) => void
     setSelectedEndPort: (port: Port) => void
-    unselectPorts: () => void,
+    unselectPort: () => void,
 }
 
 export const useSelectedPortStore = create<Store>((set) => ({
@@ -14,5 +14,5 @@ export const useSelectedPortStore = create<Store>((set) => ({
     selectedEndPort: undefined,
     setSelectedPort: (port) => set({ selectedPort: port }),
     setSelectedEndPort: (port) => set({ selectedEndPort: port }),
-    unselectPorts: () => set({ selectedPort: undefined, selectedEndPort: undefined })
+    unselectPort: () => set({ selectedPort: undefined })
 }))

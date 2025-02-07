@@ -1,6 +1,6 @@
 import { blocksFlowApi } from "../../api"
 import { relationFromPorts, type Block } from "../../domain/block"
-import { isPortBlocksSame, isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../../domain/port"
+import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../../domain/port"
 import { useSelectedPortStore } from "./use-selected-port-store"
 
 export const useSelectPort = ({
@@ -19,15 +19,11 @@ export const useSelectPort = ({
         unselectPorts
     } = useSelectedPortStore()
 
-    const isSelectedPort = selectedPort && portsAreEqual(port, selectedPort)
+    const isSelectedPort = !!selectedPort && portsAreEqual(port, selectedPort)
 
     const isCanStartSelection = !selectedPort && !portIsAlreadyInUse(blocks, port)
 
-    const isCanEndSelection = 
-        selectedPort && 
-        !portIsAlreadyInUse(blocks, port) && 
-        !isPortTypesSame(selectedPort, port) && 
-        !isPortBlocksSame(selectedPort, port)
+    const isCanEndSelection = selectedPort && !portIsAlreadyInUse(blocks, port) && !isPortTypesSame(selectedPort, port)
 
 
     const selectPort = async () => {
@@ -43,7 +39,7 @@ export const useSelectPort = ({
             await blocksFlowApi.addRelation(params)
             await onSuccess?.()
 
-            unselectPorts()  // TODO: при слабом интернете, можно из одного порта провести несколько relations
+            unselectPorts()
         }
     }
 

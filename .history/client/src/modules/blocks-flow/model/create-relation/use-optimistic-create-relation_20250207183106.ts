@@ -5,9 +5,7 @@ export const useOptimisticCreateRelation = (relations: Relation[]) => {
     const { selectedPort, selectedEndPort } = useSelectedPortStore()
 
     if (selectedPort && selectedEndPort) {
-        const relation = relationFromPorts(selectedPort, selectedEndPort)
-        
-        return [...relations, relation]
+        return [relations, ...relationFromPorts(selectedPort, selectedEndPort)]
     }
 
     return relations

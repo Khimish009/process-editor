@@ -1,7 +1,8 @@
 import { blocksFlowApi } from "../../api"
-import { relationFromPorts, type Block } from "../../domain/block"
-import { isPortBlocksSame, isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../../domain/port"
+import type { Block } from "../../domain/block"
+import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../../domain/port"
 import { useSelectedPortStore } from "./use-selected-port-store"
+import { useUnselectPort } from "./use-unselect-port"
 
 export const useSelectPort = ({
     port,
@@ -19,15 +20,11 @@ export const useSelectPort = ({
         unselectPorts
     } = useSelectedPortStore()
 
-    const isSelectedPort = selectedPort && portsAreEqual(port, selectedPort)
+    const isSelectedPort = !!selectedPort && portsAreEqual(port, selectedPort)
 
     const isCanStartSelection = !selectedPort && !portIsAlreadyInUse(blocks, port)
 
-    const isCanEndSelection = 
-        selectedPort && 
-        !portIsAlreadyInUse(blocks, port) && 
-        !isPortTypesSame(selectedPort, port) && 
-        !isPortBlocksSame(selectedPort, port)
+    const isCanEndSelection = selectedPort && !portIsAlreadyInUse(blocks, port) && !isPortTypesSame(selectedPort, port)
 
 
     const selectPort = async () => {
@@ -39,11 +36,24 @@ export const useSelectPort = ({
         if (isCanEndSelection) {
             setSelectedEndPort(port)
 
-            const params = relationFromPorts(port, selectedPort)
+            const params = port.type === "input" ?
+            {
+                inputId: port!.blockId,
+                inputPort: port!.port,
+                outputId: selectedPort!.blockId,
+                outputPort: selectedPort!.port
+            } :
+            {
+                inputId: selectedPort!.blockId,
+                inputPort: selectedPort!.port,
+                outputId: port!.blockId,
+                outputPort: port!.port
+            }
+
             await blocksFlowApi.addRelation(params)
             await onSuccess?.()
 
-            unselectPorts()  // TODO: при слабом интернете, можно из одного порта провести несколько relations
+            unselectPorts()
         }
     }
 

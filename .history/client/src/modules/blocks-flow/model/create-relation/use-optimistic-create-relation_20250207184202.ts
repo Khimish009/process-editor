@@ -4,6 +4,8 @@ import { useSelectedPortStore } from "./use-selected-port-store"
 export const useOptimisticCreateRelation = (relations: Relation[]) => {
     const { selectedPort, selectedEndPort } = useSelectedPortStore()
 
+    console.log(selectedPort, selectedEndPort)
+
     if (selectedPort && selectedEndPort) {
         const relation = relationFromPorts(selectedPort, selectedEndPort)
         

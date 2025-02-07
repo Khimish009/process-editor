@@ -18,13 +18,13 @@ export const BlocksFlow = ({
     onChanged: () => Promise<void>
 }) => {
     const blockTypes = useBlockTypes((state) => state.getData());
-    const { isSelection, unselectPorts } = useUnselectPort()
+    const { isSelection, unselectPort } = useUnselectPort()
 
     useDelete(onChanged)
 
     return (
         <Root
-            onFieldClick={isSelection ? unselectPorts : onFlowClick}  
+            onFieldClick={isSelection ? unselectPort : onFlowClick}  
             arrows={<Arrows blocks={blocks} />}
             blocks={blocks.map(block => (
                 <BlockView
