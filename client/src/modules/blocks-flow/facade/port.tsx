@@ -29,8 +29,8 @@ export function Port({
 
     const { 
         selectPort,
-        getIsSelectedPort, 
-        getIsCanEndSelection 
+        isSelectedPort, 
+        isCanEndSelection 
     } = useSelectPort({
         port: portInfo,
         blocks, 
@@ -43,8 +43,8 @@ export function Port({
             key={port}
             type={type}
             text={label}
-            isSelected={getIsSelectedPort()}
-            isCanEndSelection={getIsCanEndSelection()}
+            isSelected={isSelectedPort}
+            isCanEndSelection={isCanEndSelection}
             onTargetClick={selectPort}
             portRef={portRef}
         />

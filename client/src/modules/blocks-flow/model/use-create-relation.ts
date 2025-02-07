@@ -14,40 +14,20 @@ export const useSelectPort = ({
 }) => {
     const { selectedPort, setSelectedPort, unselectPort } = useSelectedPortStore()
 
-    const isSelection = !!selectedPort
+    const isSelectedPort = !!selectedPort && portsAreEqual(port, selectedPort)
 
-    const getIsSelectedPort = () => {
-        if (!selectedPort) {
-            return false
-        }
+    const isCanStartSelection = !selectedPort && !portIsAlreadyInUse(blocks, port)
 
-        return portsAreEqual(port, selectedPort)
-    }
-
-    const getIsCanStartSelection = (blocks: Block[]) => {
-        if (selectedPort) {
-            return false
-        }
-
-        return !portIsAlreadyInUse(blocks, port)
-    }
-
-    const getIsCanEndSelection = () => {
-        if (!selectedPort) {
-            return false
-        }
-
-        return !portIsAlreadyInUse(blocks, port) && !isPortTypesSame(selectedPort, port)
-    }
+    const isCanEndSelection = selectedPort && !portIsAlreadyInUse(blocks, port) && !isPortTypesSame(selectedPort, port)
 
 
     const selectPort = () => {
-        if (getIsCanStartSelection(blocks)) {
+        if (isCanStartSelection) {
             setSelectedPort(port) 
             return
         }
 
-        if (getIsCanEndSelection()) {
+        if (isCanEndSelection) {
             const params = port.type === "input" ?
             {
                 inputId: port!.blockId,
@@ -70,9 +50,8 @@ export const useSelectPort = ({
     }
 
     return {
-        isSelection,
-        getIsSelectedPort,
-        getIsCanEndSelection,
+        isSelectedPort,
+        isCanEndSelection,
         selectPort
     }
 }
