@@ -1,12 +1,12 @@
 import type { Position } from "../domain/position"
 import { type Block } from "../domain/block"
 import { useBlockTypes } from "../model/use-block-types"
-import { useUnselectPort } from "../model/use-create-relation"
 import { BlockView } from "../ui/block"
 import { Port } from "./port"
 import { Root } from "../ui/root"
 import { Arrows } from "./arrows"
 import { useDelete } from "./use-delete"
+import { useUnselectPort } from "../model/create-relation"
 
 export const BlocksFlow = ({
     blocks,

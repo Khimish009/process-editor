@@ -1,6 +1,6 @@
 import type { Block } from "../domain/block"
 import { getPortId } from "../domain/port"
-import { useSelectPort } from "../model/use-create-relation"
+import { useSelectPort } from "../model/create-relation"
 import { PortView } from "../ui/port"
 import { usePortPositionsReader } from "../view-model/use-ports-positions"
 

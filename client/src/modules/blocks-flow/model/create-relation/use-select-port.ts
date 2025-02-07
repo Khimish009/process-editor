@@ -1,7 +1,7 @@
-import { blocksFlowApi } from "../api"
-import type { Block, Relation } from "../domain/block"
-import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../domain/port"
-import { create } from "zustand"
+import { blocksFlowApi } from "../../api"
+import type { Block } from "../../domain/block"
+import { isPortTypesSame, portIsAlreadyInUse, portsAreEqual, type Port } from "../../domain/port"
+import { useSelectedPortStore } from "./use-selected-port-store"
 
 export const useSelectPort = ({
     port,
@@ -55,28 +55,3 @@ export const useSelectPort = ({
         selectPort
     }
 }
-
-export const useUnselectPort = () => {
-    const { unselectPort, selectedPort } = useSelectedPortStore()
-
-    return {
-        isSelection: !!selectedPort,
-        unselectPort
-    }
-}
-
-export const useOptimisticCreateRelations = (relations: Relation[]) => {
-    return relations
-}
-
-type Store = {
-    selectedPort: Port | undefined
-    setSelectedPort: (port: Port) => void
-    unselectPort: () => void,
-}
-
-const useSelectedPortStore = create<Store>((set) => ({
-    selectedPort: undefined,
-    setSelectedPort: (port) => set({ selectedPort: port }),
-    unselectPort: () => set({ selectedPort: undefined })
-}))

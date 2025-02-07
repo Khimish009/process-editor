@@ -1,6 +1,6 @@
 import { Block, blocksRecord, blocksRelations } from "../domain/block"
+import { useOptimisticCreateRelation } from "../model/create-relation"
 import { useOptimisticDeleteRelations } from "../model/delete-relations"
-import { useOptimisticCreateRelations } from "../model/use-create-relation"
 import { useSelected } from "../model/use-selected"
 import { ArrowUI } from "../ui/arrow"
 import { usePortPositions } from "../view-model/use-ports-positions"
@@ -13,7 +13,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
 
     let relations = blocksRelations(blocks)
     relations = useOptimisticDeleteRelations(relations)
-    relations = useOptimisticCreateRelations(relations)
+    relations = useOptimisticCreateRelation(relations)
 
     return (
         <>
