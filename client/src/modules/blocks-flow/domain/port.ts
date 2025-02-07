@@ -1,4 +1,4 @@
-import { Block, BlockId } from "./block"
+import type { Block, BlockId } from "./block"
 
 export type PortId = string
 
@@ -39,5 +39,7 @@ export const portIsAlreadyInUse = (blocks: Block[], port: Port) => {
 }
 
 export const isPortTypesSame = (a?: Port, b?: Port) => a?.type === b?.type
+
+export const isPortBlocksSame = (a?: Port, b?: Port) => a?.blockId === b?.blockId
 
 export const getPortId = (port: Port): PortId => `${port.blockId}:${port.type}:${port.port}`
