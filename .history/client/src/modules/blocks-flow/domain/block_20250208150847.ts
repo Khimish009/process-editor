@@ -65,10 +65,10 @@ export const getPortPositions = ({
     portPositions: Record<PortId, Position>
 }) => {
     const portId = getPortId(port)
-    const inputPortPosition = portPositions?.[portId] ?? { x: 0, y: 0 };
-    const inputBlock = blocksRecord[port.blockId] ?? { x: 0, y: 0 };
+    const inputPortPosition = portPositions?.[portId];
+    const inputBlock = blocksRecord[port.blockId];
 
-    return sumPosition(inputBlock, inputPortPosition);
+    return inputPosition = sumPosition(inputBlock, inputPortPosition);
 }
 
 export const getRelationsPositions = ({
@@ -81,30 +81,39 @@ export const getRelationsPositions = ({
     portPositions: Record<PortId, Position>
 }) => {
     return relations.map((relation) => {
-        const inputPosition = getPortPositions({
-            blocksRecord,
-            portPositions,
-            port: {
-                blockId: relation.inputId,
-                port: relation.inputPort,
-                type: "input",
-            }
+        const inputPortId = getPortId({
+            blockId: relation.inputId,
+            port: relation.inputPort,
+            type: "input",
         });
     
-        const outputPosition = getPortPositions({
-            blocksRecord,
-            portPositions,
-            port: {
-                blockId: relation.outputId,
-                port: relation.outputPort,
-                type: "output",
-            }
+        const outputPortId = getPortId({
+            blockId: relation.outputId,
+            port: relation.outputPort,
+            type: "output",
         });
+      
+        const inputPortPosition = portPositions?.[inputPortId];
+        const outputPortPosition = portPositions?.[outputPortId];
+        const inputBlock = blocksRecord[relation.inputId];
+        const outputBlock = blocksRecord[relation.outputId];
+      
+        if (
+            !inputPortPosition ||
+            !outputPortPosition ||
+            !inputBlock ||
+            !outputBlock
+        ) {
+            return null;
+        }
+      
+        const inputPosition = sumPosition(inputBlock, inputPortPosition);
+        const outputPosition = sumPosition(outputBlock, outputPortPosition);
     
         return {
             id: relation.id,
             inputPosition,
             outputPosition
         }
-    })
+    }).filter((x) => !!x)
 }

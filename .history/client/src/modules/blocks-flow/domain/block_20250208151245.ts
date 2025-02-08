@@ -106,5 +106,5 @@ export const getRelationsPositions = ({
             inputPosition,
             outputPosition
         }
-    })
+    }).filter((x) => !!x)
 }
