@@ -15,7 +15,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const relations = blocksRelations(blocks)
     const optimisticDeleteRelations = useOptimisticDeleteRelations(relations)
     const [optimisticCreateRelations, tempArrayStartPosition] = useOptimisticCreateRelation({
-        relations: optimisticDeleteRelations, 
+        relations: optimisticDeleteRelations,
         blocksRecord,
         portPositions
     })

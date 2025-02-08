@@ -1,4 +1,4 @@
-import { useMousePosition } from "../view-model/use-mouse-positions"
+import { useMousePosition } from "../../../shared/use-mouse-positions"
 import { Block, getBlocksRecord, blocksRelations, getRelationsPositions } from "../domain/block"
 import { useOptimisticCreateRelation } from "../model/create-relation"
 import { useOptimisticDeleteRelations } from "../model/delete-relations"
@@ -15,7 +15,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const relations = blocksRelations(blocks)
     const optimisticDeleteRelations = useOptimisticDeleteRelations(relations)
     const [optimisticCreateRelations, tempArrayStartPosition] = useOptimisticCreateRelation({
-        relations: optimisticDeleteRelations, 
+        relations: optimisticDeleteRelations,
         blocksRecord,
         portPositions
     })

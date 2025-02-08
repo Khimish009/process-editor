@@ -5,18 +5,18 @@ import { useSelectedPortStore } from "./use-selected-port-store"
 
 export const useOptimisticCreateRelation = ({
     relations,
-    blocksRecord,
+    blocks,
     portPositions
 }: {
     relations: Relation[]
-    blocksRecord: Record<BlockId, Block>
+    blocks: Record<BlockId, Block>
     portPositions: Record<PortId, Position>
 }) => {
     const { selectedPort, selectedEndPort } = useSelectedPortStore()
 
     if (selectedPort && !selectedEndPort) { 
             const tempArrayStartPosition = getPortPositions({
-                blocksRecord,
+                blocksRecord: blocks,
                 portPositions,
                 port: selectedPort
             })
@@ -27,7 +27,7 @@ export const useOptimisticCreateRelation = ({
     if (selectedPort && selectedEndPort) {
         const relation = relationFromPorts(selectedPort, selectedEndPort)
         
-        return [relations.concat(relation)] as const
+        return [[...relations, relation]] as const
     }
 
     return [relations] as const 

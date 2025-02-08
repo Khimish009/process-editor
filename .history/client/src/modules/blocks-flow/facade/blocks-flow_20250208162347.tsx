@@ -7,7 +7,7 @@ import { Root } from "../ui/root"
 import { Arrows } from "./arrows"
 import { useDelete } from "./use-delete"
 import { useUnselectPort } from "../model/create-relation"
-import { useListenMousePosition } from "../view-model/use-mouse-positions"
+import { useListenMousePosition } from "../../../shared/use-mouse-positions"
 
 export const BlocksFlow = ({
     blocks,

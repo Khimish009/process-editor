@@ -13,16 +13,16 @@ export const Layout = ({
   noPointer?: boolean
   start: Position
   end: Position
-  onClick?: () => void
+  onClick: () => void
 }) => {  
     const d = `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
   
     return (
-      <path
-        d={d}
-        fill="none"
-        onClick={onClick}
-        className={clsx(styles.arrow, { [styles.noPointer]: noPointer })}
+      <path 
+        d={d}  
+        fill="none" 
+        onClick={onClick} 
+        className={clsx(styles.arrow, { styles.noPointer: noPointer })}
         stroke={isSelected ? "blue" : "black"}
       />
     )

@@ -1,4 +1,4 @@
-import { useMousePosition } from "../view-model/use-mouse-positions"
+import { useMousePosition } from "../../../shared/use-mouse-positions"
 import { Block, getBlocksRecord, blocksRelations, getRelationsPositions } from "../domain/block"
 import { useOptimisticCreateRelation } from "../model/create-relation"
 import { useOptimisticDeleteRelations } from "../model/delete-relations"
@@ -15,7 +15,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const relations = blocksRelations(blocks)
     const optimisticDeleteRelations = useOptimisticDeleteRelations(relations)
     const [optimisticCreateRelations, tempArrayStartPosition] = useOptimisticCreateRelation({
-        relations: optimisticDeleteRelations, 
+        relations: optimisticDeleteRelations,
         blocksRecord,
         portPositions
     })
@@ -30,11 +30,11 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
 
     return (
         <>
-            {tempArrayStartPosition && mousePosition && 
-                <ArrowUI
+            {tempArrayStartPosition && mousePosition &&
+                <ArrowUI 
                     start={tempArrayStartPosition}
                     end={mousePosition}
-                    noPointer={true}
+                    isSelected={selected[id]}
                 />
             }
             {arrows.map(({ id, inputPosition, outputPosition }) => (
