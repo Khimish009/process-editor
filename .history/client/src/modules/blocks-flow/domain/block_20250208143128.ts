@@ -99,5 +99,5 @@ export const getRelationsPositions = ({
             inputPosition,
             outputPosition
         }
-    }).filter((x) => !!x)
+    }).filter((x) => x)
 }

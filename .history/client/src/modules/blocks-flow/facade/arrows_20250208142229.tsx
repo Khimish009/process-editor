@@ -1,4 +1,4 @@
-import { Block, blocksRecord, blocksRelations, getRelationsPositions } from "../domain/block"
+import { Block, blocksRecord, blocksRelations } from "../domain/block"
 import { useOptimisticCreateRelation } from "../model/create-relation"
 import { useOptimisticDeleteRelations } from "../model/delete-relations"
 import { useSelected } from "../model/use-selected"
@@ -11,25 +11,19 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
     const selected = useSelected(state => state.selectedRelations)
     const toggleRelation = useSelected(state => state.toggleRelation)
 
+    const {} = useRela
+
     let relations = blocksRelations(blocks)
     relations = useOptimisticDeleteRelations(relations)
     relations = useOptimisticCreateRelation(relations)
 
-    const arrows = getRelationsPositions({
-        relations,
-        blocksRecord: record,
-        portPositions
-    })
-
     return (
         <>
-            {arrows.map(({ id, inputPosition, outputPosition }) => (
+            {relations.map(relation => (
                 <ArrowUI
-                    key={id}
-                    start={inputPosition}
-                    end={outputPosition}
-                    isSelected={selected[id]}
-                    onClick={() => toggleRelation(id)}
+                    key={relation.id}  
+                    isSelected={selected[relation.id]}
+                    onClick={() => toggleRelation(relation.id)}
                 />
             ))}
         </>

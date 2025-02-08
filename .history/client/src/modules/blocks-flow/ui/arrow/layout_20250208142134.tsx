@@ -1,4 +1,6 @@
-import { Position } from "../../domain/position";
+import { Block, BlockId, Relation } from "../../domain/block";
+import { getPortId, PortId } from "../../domain/port";
+import { Position, sumPosition } from "../../domain/position";
 import styles from "./styles.module.css"
 
 export const Layout = ({ 

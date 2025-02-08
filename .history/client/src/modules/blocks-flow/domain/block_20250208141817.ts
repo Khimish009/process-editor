@@ -1,5 +1,4 @@
-import { getPortId, PortId, Port } from "./port"
-import { type Position, sumPosition } from "./position"
+import { getPortId, type Port } from "./port"
 
 export type BlockId = string
 
@@ -56,48 +55,36 @@ export const relationFromPorts = (portA: Port, portB: Port) => {
 }
 
 export const getRelationsPositions = ({
-    relations,
-    blocksRecord,
-    portPositions
+    relation,
 }: {
-    relations: Relation[]
-    blocksRecord: Record<BlockId, Block>
-    portPositions: Record<PortId, Position>
+    relation
 }) => {
-    return relations.map((relation) => {
-        const inputPortId = getPortId({
-            blockId: relation.inputId,
-            port: relation.inputPort,
-            type: "input",
+const inputPortId = getPortId({
+          blockId: relation.inputId,
+          port: relation.inputPort,
+          type: "input",
         });
-    
+  
         const outputPortId = getPortId({
-            blockId: relation.outputId,
-            port: relation.outputPort,
-            type: "output",
+          blockId: relation.outputId,
+          port: relation.outputPort,
+          type: "output",
         });
-      
+  
         const inputPortPosition = portPositions?.[inputPortId];
         const outputPortPosition = portPositions?.[outputPortId];
         const inputBlock = blocksRecord[relation.inputId];
         const outputBlock = blocksRecord[relation.outputId];
-      
+  
         if (
-            !inputPortPosition ||
-            !outputPortPosition ||
-            !inputBlock ||
-            !outputBlock
+          !inputPortPosition ||
+          !outputPortPosition ||
+          !inputBlock ||
+          !outputBlock
         ) {
-            return null;
+          return null;
         }
-      
+  
         const inputPosition = sumPosition(inputBlock, inputPortPosition);
         const outputPosition = sumPosition(outputBlock, outputPortPosition);
-    
-        return {
-            id: relation.id,
-            inputPosition,
-            outputPosition
-        }
-    }).filter((x) => !!x)
 }

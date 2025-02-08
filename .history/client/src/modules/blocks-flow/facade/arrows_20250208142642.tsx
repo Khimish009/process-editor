@@ -23,13 +23,11 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
 
     return (
         <>
-            {arrows.map(({ id, inputPosition, outputPosition }) => (
+            {arrows.map(relation => (
                 <ArrowUI
-                    key={id}
-                    start={inputPosition}
-                    end={outputPosition}
-                    isSelected={selected[id]}
-                    onClick={() => toggleRelation(id)}
+                    key={relation.id}  
+                    isSelected={selected[relation.id]}
+                    onClick={() => toggleRelation(relation.id)}
                 />
             ))}
         </>

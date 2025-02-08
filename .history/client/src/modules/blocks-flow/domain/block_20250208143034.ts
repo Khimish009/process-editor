@@ -95,9 +95,8 @@ export const getRelationsPositions = ({
         const outputPosition = sumPosition(outputBlock, outputPortPosition);
     
         return {
-            id: relation.id,
             inputPosition,
             outputPosition
         }
-    }).filter((x) => !!x)
+    }).filter(Boolean)
 }

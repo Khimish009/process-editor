@@ -23,7 +23,7 @@ export const Arrows = ({ blocks }: { blocks: Block[] }) => {
 
     return (
         <>
-            {arrows.map(({ id, inputPosition, outputPosition }) => (
+            {arrows.map({id, inputPosition, outputPosition } => (
                 <ArrowUI
                     key={id}
                     start={inputPosition}
