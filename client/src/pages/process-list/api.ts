@@ -1,4 +1,4 @@
-import { ProcessListItem } from "./model/use-list"
+import { ProcessListItem } from "./domain/process-item"
 
 export type ProcessApi = {
     list: () => Promise<ProcessListItem[]>

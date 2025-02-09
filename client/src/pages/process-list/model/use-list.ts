@@ -1,11 +1,6 @@
 import { useLoad } from "../../../shared/use-load";
 import { ProcessApi } from "../api";
 
-export type ProcessListItem = {
-    id: string;
-    name: string;
-}
-
 export const useList = (processApi: ProcessApi) => {
     const { 
         data: processList = [],
