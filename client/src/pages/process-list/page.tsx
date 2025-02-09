@@ -1,3 +1,4 @@
+import { processApi } from "./api"
 import { useProcessFilters } from "./model/use-filters"
 import { useList } from "./model/use-list"
 import { CreateProcessForm } from "./ui/create-process-form"
@@ -6,7 +7,7 @@ import { ProcessCard } from "./ui/process-card"
 import { Root } from "./ui/root"
 
 export const Page = () => {
-    const { isLoading, list, create } = useList()
+    const { isLoading, list, create } = useList(processApi)
     const { filteredList, searchTerm, setSearchTerm } = useProcessFilters(list)
     
     return (
