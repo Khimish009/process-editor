@@ -1,4 +1,4 @@
-import { ProcessListItem } from "./model/use-list"
+import { ProcessListItem } from "./model/use-process-list"
 
 async function list() {
     return await fetch('/api/processes').then((res) => {

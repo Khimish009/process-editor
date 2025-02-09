@@ -2,7 +2,7 @@ import { useProcessFilters } from "./model/use-filters"
 import { useList } from "./model/use-list"
 import { CreateProcessForm } from "./ui/create-process-form"
 import { ProcessFilters } from "./ui/filters"
-import { ProcessCard } from "./ui/process-card" 
+import { ProcessCard } from "./ui/process-card"
 import { Root } from "./ui/root"
 
 export const Page = () => {

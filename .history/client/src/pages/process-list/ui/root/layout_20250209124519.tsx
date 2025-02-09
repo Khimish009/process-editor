@@ -2,12 +2,12 @@ import React from "react"
 import styles from "./styles.module.css"
 
 export const Layout = ({
-    actionsPanel,
-    list,
+    actionsPanel
+    cards: card,
     isLoading
 }: {
     actionsPanel: React.ReactNode,
-    list: React.ReactNode,
+    cards: React.ReactNode,
     isLoading: boolean
 }) => {
     return (
@@ -15,7 +15,7 @@ export const Layout = ({
             <h1 className={styles.title}>process list</h1>
             {actionsPanel}
             <div className={styles.list}>
-                {list}
+                {card}
                 {isLoading && <div className={styles.loading}>loading...</div>}
             </div>
         </div>
