@@ -1,0 +1,15 @@
+.arrow {
+    stroke-width: 3px;
+    pointer-events: all;
+    stroke-linecap: round;
+    transition: stroke-width 0.2s;
+}
+
+
+.noPointer {
+    pointer-events: none;
+}
+
+.arrow:hover {
+    stroke-width: 10px;
+}

@@ -3,20 +3,20 @@ export type Position = {
     y: number
 }
 
-export type Rectangle = {
+export type Rectange = {
     leftTop: Position,
-    rightBottom: Position
+    rigthBottom: Position
 }
 
-export const createRectangle = (position1: Position, position2: Position) => {
+export const createRectange = (position1: Position, position2: Position) => {
     const leftTopX = Math.min(position1.x, position2.x)
     const leftTopY = Math.min(position1.y, position2.y)
-    const rightBottomX = Math.max(position1.x, position2.x)
-    const rightBottomY = Math.max(position1.y, position2.y)
+    const rigthBottomX = Math.max(position1.x, position2.x)
+    const rigthBottomY = Math.max(position1.y, position2.y)
 
     return {
         leftTop: { x: leftTopX, y: leftTopY },
-        rightBottom: { x: rightBottomX, y: rightBottomY }
+        rigthBottom: { x: rigthBottomX, y: rigthBottomY }
     }
 }
 

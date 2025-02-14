@@ -1,0 +1,6 @@
+.selectionArea {
+    position: absolute;
+    border: 1px solid blue;
+    color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
